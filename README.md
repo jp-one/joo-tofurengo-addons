@@ -2,6 +2,7 @@
 
 ## pythonパッケージ
 
+### tofurengo
 tofurengo Pythonパッケージをgithubからインストール
 requirements.txt に追記
 ※ --index-urlを利用しているので後続のインストールに注意する。
@@ -14,4 +15,9 @@ tofurengo-data-mj-plus-v4-10
 tofurengo-data-mj-plusx-v1-20
 tofurengo-data-mj-v6-02-201
 tofurengo-data-mj-v6-02-201-onka
+```
+
+**インストールの確認**
+```bash
+pip3 list | grep tofurengo
 ```
