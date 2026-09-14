@@ -1,21 +1,21 @@
 /**
- * Font definitions for joo_web_fonts module.
+ * Font definitions for joo_glyph_fonts module.
  */
 
 /* Font face definitions */
 @font-face {
     font-family: "DWPIexMincho";
-    src: url("/joo_web_fonts/static/src/fonts/DWPIexMincho.ttf") format("truetype");
+    src: url("/joo_glyph_fonts/static/src/fonts/DWPIexMincho.ttf") format("truetype");
 }
 
 @font-face {
     font-family: "DWPIMincho";
-    src: url("/joo_web_fonts/static/src/fonts/DWPIMincho.ttf") format("truetype");
+    src: url("/joo_glyph_fonts/static/src/fonts/DWPIMincho.ttf") format("truetype");
 }
 
 @font-face {
     font-family: "ipamjm";
-    src: url("/joo_web_fonts/static/src/fonts/ipamjm.ttf") format("truetype");
+    src: url("/joo_glyph_fonts/static/src/fonts/ipamjm.ttf") format("truetype");
 }
 
 

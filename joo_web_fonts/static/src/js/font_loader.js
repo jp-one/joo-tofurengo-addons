@@ -18,12 +18,12 @@ const DYNAMIC_STYLE_ID = "joo-web-fonts-dynamic-style";
  */
 async function loadAndApplyFont() {
     try {
-        const fontKey = await rpc("/joo_web_fonts/font");
+        const fontKey = await rpc("/joo_glyph_fonts/font");
         const fontFamily = FONT_MAP[fontKey] || null;
 
         if (!fontFamily) {
             console.warn(
-                "[joo_web_fonts] Unknown font key received:",
+                "[joo_glyph_fonts] Unknown font key received:",
                 fontKey
             );
             return;
@@ -40,9 +40,9 @@ async function loadAndApplyFont() {
         // Overwrite style rules for .joo-font
         style.innerHTML = `.joo-font { font-family: "${fontFamily}", serif !important; }`;
 
-        console.debug("[joo_web_fonts] Applied font:", fontFamily);
+        console.debug("[joo_glyph_fonts] Applied font:", fontFamily);
     } catch (err) {
-        console.error("[joo_web_fonts] Failed to load font configuration:", err);
+        console.error("[joo_glyph_fonts] Failed to load font configuration:", err);
     }
 }
 

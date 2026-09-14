@@ -1,5 +1,5 @@
 {
-    'name': "joo_web_fonts",
+    'name': "joo_glyph_fonts",
 
     'summary': "Short (1 phrase/line) summary of the module's purpose",
 
@@ -28,9 +28,9 @@ Long description of module's purpose
     'assets': {
         'web.assets_backend': [
             # css
-            'joo_web_fonts/static/src/css/fonts.css',
+            'joo_glyph_fonts/static/src/css/fonts.css',
             # js
-            'joo_web_fonts/static/src/js/font_loader.js',
+            'joo_glyph_fonts/static/src/js/font_loader.js',
         ],
     },
 
