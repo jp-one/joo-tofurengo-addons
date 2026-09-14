@@ -17,22 +17,18 @@ Long description of module's purpose
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'base_setup'],
+    'depends': ['base', 'base_setup', 'web'],
 
     # always loaded
     'data': [
         'views/res_config_settings_views.xml',
     ],
     
-    # static files (css, fonts, js) are loaded through the assets system
+    # static files (css, js) are loaded through the assets system
     'assets': {
         'web.assets_backend': [
             # css
             'joo_web_fonts/static/src/css/fonts.css',
-            # fonts
-            'joo_web_fonts/static/src/fonts/ipamjm.ttf',
-            'joo_web_fonts/static/src/fonts/DWPIMincho.ttf',
-            'joo_web_fonts/static/src/fonts/DWPIexMincho.ttf',
             # js
             'joo_web_fonts/static/src/js/font_loader.js',
         ],
