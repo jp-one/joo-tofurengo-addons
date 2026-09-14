@@ -2,18 +2,18 @@
 
 ## モジュール構成
 
-joo_tofurengo_serviceとjoo_glyph_fontsとは、独立。
-joo_partner_tofurengoは、joo_tofurengo_serviceとjoo_glyph_fontsに依存。
+joo_tofurengoとjoo_glyph_fontsとは、独立。
+joo_partner_tofurengoは、joo_tofurengoとjoo_glyph_fontsに依存。
 
 ```
 joo-tofurengo-addons/
-├── joo_tofurengo_service/  # 異体字変換・テキスト処理エンジン
+├── joo_tofurengo/  # 異体字変換・テキスト処理エンジン
 ├── joo_glyph_fonts/          # Webフォント配信 & CSSセレクター定義
 └── joo_partner_tofurengo/  # 取引先（res.partner）統合
 ```
 
 
-### joo_tofurengo_service
+### joo_tofurengo
 
 * tofurengoによる正規化、描画、簡素化
 * グリフデータセットの設定変更
