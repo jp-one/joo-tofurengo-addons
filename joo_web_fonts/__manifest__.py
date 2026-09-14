@@ -21,13 +21,22 @@ Long description of module's purpose
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
-        'views/views.xml',
-        'views/templates.xml',
+        'views/res_config_settings_views.xml',
     ],
-    # only loaded in demonstration mode
-    'demo': [
-        'demo/demo.xml',
-    ],
+    
+    # static files (css, fonts, js) are loaded through the assets system
+    'assets': {
+        'web.assets_backend': [
+            # css
+            'joo_web_fonts/static/src/css/fonts.css',
+            # fonts
+            'joo_web_fonts/static/src/fonts/ipamjm.ttf',
+            'joo_web_fonts/static/src/fonts/DWPIMincho.ttf',
+            'joo_web_fonts/static/src/fonts/DWPIexMincho.ttf',
+            # js
+            'joo_web_fonts/static/src/js/font_loader.js',
+        ],
+    },
+
 }
 

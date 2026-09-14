@@ -1,0 +1,63 @@
+/**
+ * Font definitions for joo_web_fonts module.
+ */
+
+/* Font face definitions */
+@font-face {
+    font-family: "DWPIexMincho";
+    src: url("/joo_web_fonts/static/src/fonts/DWPIexMincho.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "DWPIMincho";
+    src: url("/joo_web_fonts/static/src/fonts/DWPIMincho.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "ipamjm";
+    src: url("/joo_web_fonts/static/src/fonts/ipamjm.ttf") format("truetype");
+}
+
+
+/**
+ * 1. Dynamic font class
+ * Fallback / default font definition before font_loader.js runs.
+ * Matches the default fallback key ('dwpiexmincho') in FontController.
+ */
+.joo-font {
+    font-family: "DWPIexMincho", serif !important;
+}
+
+
+/**
+ * 2. Fixed font classes
+ * Use exact font file names to force a specific font regardless of Settings.
+ */
+.joo-font--DWPIexMincho {
+    font-family: "DWPIexMincho", serif !important;
+}
+
+.joo-font--DWPIMincho {
+    font-family: "DWPIMincho", serif !important;
+}
+
+.joo-font--ipamjm {
+    font-family: "ipamjm", serif !important;
+}
+
+
+/**
+ * 3. Data attribute selectors
+ * Target elements using the data-joo-font attribute with exact font file names.
+ */
+[data-joo-font="DWPIexMincho"] {
+    font-family: "DWPIexMincho", serif !important;
+}
+
+[data-joo-font="DWPIMincho"] {
+    font-family: "DWPIMincho", serif !important;
+}
+
+[data-joo-font="ipamjm"] {
+    font-family: "ipamjm", serif !important;
+}
