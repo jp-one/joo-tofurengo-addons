@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="res_config_settings_view_form" model="ir.ui.view">
-        <field name="name">res.config.settings.view.form.inherit.joo.web.fonts</field>
+        <field name="name">res.config.settings.view.form.inherit.joo.glyph.fonts</field>
         <field name="model">res.config.settings</field>
         <field name="priority" eval="80"/>
         <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
@@ -10,7 +10,7 @@
             <xpath expr="//div[@id='companies']//block[@name='companies_setting_container']" position="inside">
                 <setting id="joo_font_setting"
                          help="Select the font applied to elements using the 'joo-font' class.">
-                    <field name="joo_font" class="joo-font"/>
+                    <field name="joo_font"/>
                 </setting>
             </xpath>
 

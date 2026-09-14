@@ -4,7 +4,7 @@ from odoo import models, fields
 class ResConfigSettings(models.TransientModel):
     """
     Configuration settings for joo_glyph_fonts module.
-    Allows selecting the default font used for glyph rendering in the system.
+    Configures the primary web font applied to elements with the 'joo-font' class.
     """
     _inherit = 'res.config.settings'
 
@@ -17,5 +17,5 @@ class ResConfigSettings(models.TransientModel):
         string="Glyph Font",
         default="dwpiexmincho",
         config_parameter='joo_glyph_fonts.font',
-        help="Select the default font used for glyph rendering.",
+        help="Select the font applied to UI elements using the 'joo-font' class.",
     )
