@@ -3,13 +3,14 @@
     <record id="res_config_settings_view_form" model="ir.ui.view">
         <field name="name">res.config.settings.view.form.inherit.joo.tofurengo</field>
         <field name="model">res.config.settings</field>
-        <field name="priority" eval="90"/>
+        <field name="priority" eval="80"/>
         <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
         <field name="arch" type="xml">
 
             <xpath expr="//div[@id='contacts_settings']//block[@name='contacts_setting_container']" position="inside">
                 <setting id="joo_set_setting"
-                         help="Select the glyph set used for glyph tag normalization.">
+                         documentation="https://jp-rad.github.io/tofurengo/"
+                         help="Select the Glyph System Identifier that governs GlyphService normalization behavior.">
                     <field name="joo_set"/>
                 </setting>
             </xpath>
