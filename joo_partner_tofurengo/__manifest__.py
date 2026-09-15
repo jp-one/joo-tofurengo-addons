@@ -17,8 +17,14 @@ Long description of module's purpose
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base', 'contacts', 'joo_tofurengo', 'joo_glyph_fonts'],
 
+    'external_dependencies': {
+        'python': [
+            'jaconv',
+        ],
+    },
+    
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
