@@ -14,7 +14,7 @@
 }
 
 @font-face {
-    font-family: "ipamjm";
+    font-family: "IPAmjMincho";
     src: url("/joo_glyph_fonts/static/src/fonts/ipamjm.ttf") format("truetype");
 }
 
@@ -41,8 +41,8 @@
     font-family: "DWPIMincho", serif !important;
 }
 
-.joo-font--ipamjm {
-    font-family: "ipamjm", serif !important;
+.joo-font--IPAmjMincho {
+    font-family: "IPAmjMincho", serif !important;
 }
 
 
@@ -58,6 +58,6 @@
     font-family: "DWPIMincho", serif !important;
 }
 
-[data-joo-font="ipamjm"] {
-    font-family: "ipamjm", serif !important;
+[data-joo-font="IPAmjMincho"] {
+    font-family: "IPAmjMincho", serif !important;
 }

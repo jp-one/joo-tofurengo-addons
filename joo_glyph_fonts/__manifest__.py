@@ -34,5 +34,7 @@ Long description of module's purpose
         ],
     },
 
+    'license': 'LGPL-3',
+
 }
 

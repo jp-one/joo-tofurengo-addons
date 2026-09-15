@@ -19,9 +19,17 @@ Long description of module's purpose
     # any module necessary for this one to work correctly
     'depends': ['base', 'base_setup'],
 
+    'external_dependencies': {
+        'python': [
+            'tofurengo',
+        ],
+    },
+    
     # always loaded
     'data': [
         'views/res_config_settings_views.xml',
     ],
+
+    'license': 'LGPL-3',
 }
 

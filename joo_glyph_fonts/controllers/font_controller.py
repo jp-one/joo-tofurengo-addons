@@ -9,7 +9,7 @@ class FontController(http.Controller):
     to elements using the 'joo-font' CSS class.
     """
 
-    @http.route('/joo_glyph_fonts/font', type='json', auth='user')
+    @http.route('/joo_glyph_fonts/font', type='jsonrpc', auth='user')
     def get_font(self):
         """
         Return the configured font key stored in ir.config_parameter.
