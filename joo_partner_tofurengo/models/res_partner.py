@@ -4,11 +4,7 @@ from odoo import models, fields, api
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
-
-    # ---------------------------------------------------------
-    # Default sort order
-    # ---------------------------------------------------------
-    _order = "family_name_kana, family_name, given_name_kana, given_name, id"
+    _order = "family_name_kana, given_name_kana, family_name, given_name, id"
 
     # ---------------------------------------------------------
     # Kana fields
@@ -16,12 +12,6 @@ class ResPartner(models.Model):
     # ---------------------------------------------------------
     family_name_kana = fields.Char("Family Name Kana", index=True)
     given_name_kana = fields.Char("Given Name Kana", index=True)
-
-    # ---------------------------------------------------------
-    # Name-based split fields (raw name)
-    # ---------------------------------------------------------
-    family_name = fields.Char("Family Name", index=True)
-    given_name = fields.Char("Given Name", index=True)
 
     # ---------------------------------------------------------
     # GlyphTag usage flags
@@ -46,6 +36,12 @@ class ResPartner(models.Model):
     street2_ivs = fields.Char("Street2 (IVS)", compute="_compute_glyph_outputs", store=True)
 
     # ---------------------------------------------------------
+    # Name-based split fields (raw name)
+    # ---------------------------------------------------------
+    family_name = fields.Char("Family Name", index=True)
+    given_name = fields.Char("Given Name", index=True)
+
+    # ---------------------------------------------------------
     # IVS-based name split
     # ---------------------------------------------------------
     family_name_ivs = fields.Char("Family Name (IVS)", compute="_compute_glyph_outputs", store=True)
@@ -61,7 +57,7 @@ class ResPartner(models.Model):
         return jaconv.kata2hira(zenkaku)
 
     @api.onchange('family_name_kana', 'given_name_kana')
-    def _onchange_furigana_kana_to_hiragana(self):
+    def _onchange_furigana(self):
         if self.family_name_kana:
             self.family_name_kana = self._katakana_to_hiragana(self.family_name_kana)
         if self.given_name_kana:
@@ -75,21 +71,18 @@ class ResPartner(models.Model):
             return self.env['joo_tofurengo.glyph_service']
         return None
 
-    def _normalize_and_render(self, text, glyphtag=None):
+    def _normalize_and_render(self, text, use_base):
         """
         When GlyphTag is enabled, normalize/render ONLY the GlyphTag text.
         Raw text is ignored.
         """
         svc = self._get_glyph_service().sudo()
 
-        if glyphtag:
-            result = svc.normalize(glyphtag)
-        else:
-            result = svc.normalize(text)
-
+        result = svc.normalize(text)
+        if not result.success:
+            return ""
         norm = result.text
-        ivs = svc.render(norm)
-        return ivs
+        return svc.render(norm, use_base=use_base)
 
     def _split_name(self, text):
         if not text:
@@ -110,25 +103,28 @@ class ResPartner(models.Model):
     def _compute_glyph_outputs(self):
         for rec in self:
 
-            raw_name = rec.name or ""
-
-            # Name IVS
+            # raw_name and ivs_name are computed based on whether GlyphTag is used for the name.
             if rec.use_name_glyphtag:
-                ivs_name = rec._normalize_and_render(raw_name, rec.name_glyphtag)
+                tagged_name = rec.name_glyphtag or ""
+                raw_name = rec._normalize_and_render(tagged_name, use_base=True)
+                ivs_name = rec._normalize_and_render(tagged_name, use_base=False)
             else:
-                ivs_name = rec._normalize_and_render(raw_name)
+                raw_name = rec.name or ""
+                ivs_name = raw_name
 
+            rec.name = raw_name
             rec.name_ivs = ivs_name
+
+            # Raw name split
+            fam, giv = rec._split_name(raw_name)
+            rec.family_name = fam
+            rec.given_name = giv
 
             # IVS split
             fam_ivs, giv_ivs = rec._split_name(ivs_name)
             rec.family_name_ivs = fam_ivs
             rec.given_name_ivs = giv_ivs
 
-            # Raw name split
-            fam, giv = rec._split_name(raw_name)
-            rec.family_name = fam
-            rec.given_name = giv
 
             # Address IVS
             city = rec.city or ""
@@ -136,13 +132,13 @@ class ResPartner(models.Model):
             street2 = rec.street2 or ""
 
             if rec.use_address_glyphtag:
-                rec.city_ivs = rec._normalize_and_render(city, rec.city_glyphtag)
-                rec.street_ivs = rec._normalize_and_render(street, rec.street_glyphtag)
-                rec.street2_ivs = rec._normalize_and_render(street2, rec.street2_glyphtag)
+                rec.city_ivs = rec._normalize_and_render(city, use_base=False)
+                rec.street_ivs = rec._normalize_and_render(street, use_base=False)
+                rec.street2_ivs = rec._normalize_and_render(street2, use_base=False)
             else:
-                rec.city_ivs = rec._normalize_and_render(city)
-                rec.street_ivs = rec._normalize_and_render(street)
-                rec.street2_ivs = rec._normalize_and_render(street2)
+                rec.city_ivs = rec._normalize_and_render(city, use_base=True)
+                rec.street_ivs = rec._normalize_and_render(street, use_base=True)
+                rec.street2_ivs = rec._normalize_and_render(street2, use_base=True)
 
     # ---------------------------------------------------------
     # write(): GlyphTag state transition logic
