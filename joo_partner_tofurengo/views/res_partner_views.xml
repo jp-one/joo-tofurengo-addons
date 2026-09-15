@@ -2,44 +2,96 @@
 <odoo>
     <data>
 
-        <record id="view_partner_form_inherit_tofurengo" model="ir.ui.view">
-            <field name="name">res.partner.form.inherit.tofurengo</field>
+        <record id="view_partner_form_inherit_glyph_kana" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit.glyph.kana</field>
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
 
-                <!-- notebook の配下に専用タブを作成し、全項目を集約 -->
                 <xpath expr="//notebook" position="inside">
-                    <page string="Glyph and Kana Info" name="glyph_kana_info">
-                        <group>
-                            <group string="Furigana Input">
-                                <field name="family_name_kana" placeholder="姓（ふりがな）"/>
-                                <field name="given_name_kana" placeholder="名（ふりがな）" invisible="is_company"/>
+
+                    <!-- ========================= -->
+                    <!-- Name Tab -->
+                    <!-- ========================= -->
+                    <page string="Name / Kana" name="kana_name_tab">
+                        
+                        <group string="Name / Kana">                            
+                            
+                            <!-- Raw name split -->
+                            <group string="Name Split (Raw)">
+                                <field name="family_name" readonly="1"/>
+                                <field name="given_name" readonly="1" invisible="is_company"/>
                             </group>
-                            <group string="Name Conversion Outputs">
-                                <field name="family_name_search" readonly="1"/>
-                                <field name="given_name_search" readonly="1" invisible="is_company"/>
-                                <field name="family_name_ivs" class="joo-font" readonly="1"/>
-                                <field name="given_name_ivs" class="joo-font" readonly="1" invisible="is_company"/>
+
+                            <!-- IVS name split -->
+                            <group string="Name Split (IVS)">
+                                <field name="family_name_ivs" readonly="1"/>
+                                <field name="given_name_ivs" readonly="1" invisible="is_company"/>
                             </group>
+
+                            <!-- Kana -->
+                            <group string="Furigana (Kana)">
+                                <field name="family_name_kana"/>
+                                <field name="given_name_kana" invisible="is_company"/>
+                            </group>
+
+                            <!-- Flag -->
+                            <field name="use_name_glyphtag"/>
+
+                            <!-- GlyphTag (Name) -->
+                            <h1 class="mb-0 w-md-75">
+                                <field name="name_glyphtag"
+                                    widget="text"
+                                    options="{'line_breaks': False}"
+                                    class="text-break d-block joo-font"
+                                    placeholder="GlyphTag for Name"
+                                    required="type == 'contact' and use_name_glyphtag"/>
+                            </h1>
+                                                    
+                            <!-- IVS (Name) -->
+                            <h1 class="mb-0 w-md-75">
+                                <field name="name_ivs" readonly="1" class="text-break d-block joo-font"/>
+                            </h1>
+
                         </group>
 
                     </page>
-                    <page string="Address Info" name="glyph_address_info">
 
-                        <group string="Address Conversion Outputs">
-                            <group>
-                                <field name="city_search" readonly="1"/>
-                                <field name="street_search" readonly="1"/>
-                                <field name="street2_search" readonly="1"/>
+                    <!-- ========================= -->
+                    <!-- Address Tab -->
+                    <!-- ========================= -->
+                    <page string="Address" name="address_tab">
+
+                        <group string="Address">
+
+                            <!-- Flag -->
+                            <field name="use_address_glyphtag"/>
+
+                            <!-- Raw address -->
+                            <group string="Address Fields">
+                                <field name="city"/>
+                                <field name="street"/>
+                                <field name="street2"/>
                             </group>
-                            <group>
-                                <field name="city_ivs" class="joo-font" readonly="1"/>
-                                <field name="street_ivs" class="joo-font" readonly="1"/>
-                                <field name="street2_ivs" class="joo-font" readonly="1"/>
+
+                            <!-- GlyphTag (Address) -->
+                            <group string="GlyphTag (Address)">
+                                <field name="city_glyphtag"/>
+                                <field name="street_glyphtag"/>
+                                <field name="street2_glyphtag"/>
                             </group>
+
+                            <!-- IVS (Address) -->
+                            <group string="IVS (Address)">
+                                <field name="city_ivs" readonly="1" class="joo-font"/>
+                                <field name="street_ivs" readonly="1" class="joo-font"/>
+                                <field name="street2_ivs" readonly="1" class="joo-font"/>
+                            </group>
+
                         </group>
+
                     </page>
+
                 </xpath>
 
             </field>
