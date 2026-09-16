@@ -67,22 +67,28 @@ class ResPartner(models.Model):
     # Glyph service helpers
     # ---------------------------------------------------------
     def _get_glyph_service(self):
-        if 'joo_tofurengo.glyph_service' in self.env:
-            return self.env['joo_tofurengo.glyph_service']
-        return None
-
-    def _normalize_and_render(self, text, use_base):
+        self.env['joo_tofurengo.glyph_service']
+        
+    def _normalize(self, svc, text):
         """
-        When GlyphTag is enabled, normalize/render ONLY the GlyphTag text.
-        Raw text is ignored.
+        normalize the GlyphTag text.
         """
-        svc = self._get_glyph_service().sudo()
-
         result = svc.normalize(text)
-        if not result.success:
-            return ""
-        norm = result.text
-        return svc.render(norm, use_base=use_base)
+        if result.success:
+            return result.text
+        return ""
+        
+    def _render_b(self, svc, text):
+        """
+        render the GlyphTag text.
+        """
+        return svc.render(text, use_base=True)
+
+    def _render_v(self, svc, text):
+        """
+        render the GlyphTag text.
+        """
+        return svc.render(text, use_base=False)
 
     def _split_name(self, text):
         if not text:
@@ -101,45 +107,67 @@ class ResPartner(models.Model):
         'name_glyphtag', 'city_glyphtag', 'street_glyphtag', 'street2_glyphtag'
     )
     def _compute_glyph_outputs(self):
+        svc = rec._get_glyph_service().sudo()
         for rec in self:
 
             # raw_name and ivs_name are computed based on whether GlyphTag is used for the name.
             if rec.use_name_glyphtag:
-                tagged_name = rec.name_glyphtag or ""
-                raw_name = rec._normalize_and_render(tagged_name, use_base=True)
-                ivs_name = rec._normalize_and_render(tagged_name, use_base=False)
+                tagged = rec.name_glyphtag or ""
+                norm = rec._normalize(svc, tagged)
+                raw = rec._render_b(svc, norm)
+                ivs = rec._render_v(svc, norm)
             else:
-                raw_name = rec.name or ""
-                ivs_name = raw_name
+                raw = rec.name or ""
+                ivs = raw
 
-            rec.name = raw_name
-            rec.name_ivs = ivs_name
+            rec.name = raw
+            rec.name_ivs = ivs
 
             # Raw name split
-            fam, giv = rec._split_name(raw_name)
+            fam, giv = rec._split_name(raw)
             rec.family_name = fam
             rec.given_name = giv
 
             # IVS split
-            fam_ivs, giv_ivs = rec._split_name(ivs_name)
-            rec.family_name_ivs = fam_ivs
-            rec.given_name_ivs = giv_ivs
+            fam, giv = rec._split_name(ivs)
+            rec.family_name_ivs = fam
+            rec.given_name_ivs = giv
 
 
             # Address IVS
-            city = rec.city or ""
-            street = rec.street or ""
-            street2 = rec.street2 or ""
-
             if rec.use_address_glyphtag:
-                rec.city_ivs = rec._normalize_and_render(city, use_base=False)
-                rec.street_ivs = rec._normalize_and_render(street, use_base=False)
-                rec.street2_ivs = rec._normalize_and_render(street2, use_base=False)
+                # city
+                tagged = rec.city_glyphtag or ""
+                norm = rec._normalize(svc, tagged)
+                raw = rec._render_b(svc, norm)
+                ivs = rec._render_v(svc, norm)
+                rec.city = raw
+                rec.city_ivs = ivs
+                # street
+                tagged = rec.street_glyphtag or ""
+                norm = rec._normalize(svc, tagged)
+                raw = rec._render_b(svc, norm)
+                ivs = rec._render_v(svc, norm)
+                rec.street = raw
+                rec.street_ivs = ivs
+                # street2
+                tagged = rec.street2_glyphtag or ""
+                norm = rec._normalize(svc, tagged)
+                raw = rec._render_b(svc, norm)
+                ivs = rec._render_v(svc, norm)
+                rec.street2 = raw
+                rec.street2_ivs = ivs
             else:
-                rec.city_ivs = rec._normalize_and_render(city, use_base=True)
-                rec.street_ivs = rec._normalize_and_render(street, use_base=True)
-                rec.street2_ivs = rec._normalize_and_render(street2, use_base=True)
-
+                # city
+                city = rec.city or ""
+                rec.city_ivs = city
+                # street
+                street = rec.street or ""
+                rec.street_ivs = street
+                # street2
+                street2 = rec.street2 or ""
+                rec.street2_ivs = street2
+                
     # ---------------------------------------------------------
     # write(): GlyphTag state transition logic
     # ---------------------------------------------------------
