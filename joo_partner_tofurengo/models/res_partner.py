@@ -1,3 +1,5 @@
+from curses import raw
+
 import jaconv
 from odoo import models, fields, api
 
@@ -22,7 +24,7 @@ class ResPartner(models.Model):
     # ---------------------------------------------------------
     # GlyphTag input fields
     # ---------------------------------------------------------
-    name_glyphtag = fields.Char("Name GlyphTag")
+    name_glyphtag = fields.Char("Name GlyphTag", tracking=True)
     city_glyphtag = fields.Char("City GlyphTag")
     street_glyphtag = fields.Char("Street GlyphTag")
     street2_glyphtag = fields.Char("Street2 GlyphTag")
@@ -66,33 +68,38 @@ class ResPartner(models.Model):
     # ---------------------------------------------------------
     # Glyph service helpers
     # ---------------------------------------------------------
-    def _get_glyph_service(self):
-        self.env['joo_tofurengo.glyph_service']
-        
-    def _normalize(self, svc, text):
+    def _rende_b_v(self, text):
         """
-        normalize the GlyphTag text.
+        normalize and render the GlyphTag text.
         """
+        if not text:
+            return "", ""
+        svc = self.env['joo_tofurengo.glyph_service'].sudo()
         result = svc.normalize(text)
-        if result.success:
-            return result.text
-        return ""
-        
-    def _render_b(self, svc, text):
-        """
-        render the GlyphTag text.
-        """
-        return svc.render(text, use_base=True)
+        if not result.success:
+            return "", ""
+        norm = result.text
+        raw = svc.render(norm, use_base=True)
+        ivs = svc.render(norm)
+        return raw, ivs
 
-    def _render_v(self, svc, text):
+    def _simplify(self, text):
         """
-        render the GlyphTag text.
+        Simplify the GlyphTag text.
         """
-        return svc.render(text, use_base=False)
+        if not text:
+            return ""
+        svc = self.env['joo_tofurengo.glyph_service'].sudo()
+        return svc.simplify(text)
+
+    def _to_half_space(self, text):
+        if not text:
+            return ""
+        return text.replace("\u3000", " ")
 
     def _split_name(self, text):
         if not text:
-            return ("", "")
+            return "", ""
         parts = text.split(" ", 1)
         if len(parts) == 2:
             return parts[0], parts[1]
@@ -102,59 +109,43 @@ class ResPartner(models.Model):
     # Compute IVS + name-based split
     # ---------------------------------------------------------
     @api.depends(
+        'is_company',
         'name', 'city', 'street', 'street2',
         'use_name_glyphtag', 'use_address_glyphtag',
         'name_glyphtag', 'city_glyphtag', 'street_glyphtag', 'street2_glyphtag'
     )
     def _compute_glyph_outputs(self):
-        svc = rec._get_glyph_service().sudo()
         for rec in self:
 
             # raw_name and ivs_name are computed based on whether GlyphTag is used for the name.
+            rec.name_glyphtag = rec._simplify(rec.name_glyphtag)
             if rec.use_name_glyphtag:
                 tagged = rec.name_glyphtag or ""
-                norm = rec._normalize(svc, tagged)
-                raw = rec._render_b(svc, norm)
-                ivs = rec._render_v(svc, norm)
+                raw, ivs = rec._rende_b_v(tagged)
             else:
                 raw = rec.name or ""
                 ivs = raw
-
-            rec.name = raw
-            rec.name_ivs = ivs
-
-            # Raw name split
-            fam, giv = rec._split_name(raw)
-            rec.family_name = fam
-            rec.given_name = giv
-
-            # IVS split
-            fam, giv = rec._split_name(ivs)
-            rec.family_name_ivs = fam
-            rec.given_name_ivs = giv
-
+            rec.name = self._to_half_space(raw)
+            rec.name_ivs = self._to_half_space(ivs)
 
             # Address IVS
+            rec.city_glyphtag = rec._simplify(rec.city_glyphtag)
+            rec.street_glyphtag = rec._simplify(rec.street_glyphtag)
+            rec.street2_glyphtag = rec._simplify(rec.street2_glyphtag)
             if rec.use_address_glyphtag:
                 # city
                 tagged = rec.city_glyphtag or ""
-                norm = rec._normalize(svc, tagged)
-                raw = rec._render_b(svc, norm)
-                ivs = rec._render_v(svc, norm)
+                raw, ivs = rec._rende_b_v(tagged)
                 rec.city = raw
                 rec.city_ivs = ivs
                 # street
                 tagged = rec.street_glyphtag or ""
-                norm = rec._normalize(svc, tagged)
-                raw = rec._render_b(svc, norm)
-                ivs = rec._render_v(svc, norm)
+                raw, ivs = rec._rende_b_v(tagged)
                 rec.street = raw
                 rec.street_ivs = ivs
                 # street2
                 tagged = rec.street2_glyphtag or ""
-                norm = rec._normalize(svc, tagged)
-                raw = rec._render_b(svc, norm)
-                ivs = rec._render_v(svc, norm)
+                raw, ivs = rec._rende_b_v(tagged)
                 rec.street2 = raw
                 rec.street2_ivs = ivs
             else:
@@ -167,35 +158,44 @@ class ResPartner(models.Model):
                 # street2
                 street2 = rec.street2 or ""
                 rec.street2_ivs = street2
-                
+
+            # Raw name split
+            if rec.is_company:
+                rec.family_name = rec.name
+                rec.given_name = ""
+            else:
+                fam, giv = rec._split_name(rec.name)
+                rec.family_name = fam
+                rec.given_name = giv
+
+            # IVS split
+            if rec.is_company:
+                rec.family_name_ivs = rec.name_ivs
+                rec.given_name_ivs = ""
+            else:
+                fam, giv = rec._split_name(rec.name_ivs)
+                rec.family_name_ivs = fam
+                rec.given_name_ivs = giv                
     # ---------------------------------------------------------
     # write(): GlyphTag state transition logic
     # ---------------------------------------------------------
     def write(self, vals):
         for rec in self:
 
-            # Name GlyphTag: False → True
-            if 'use_name_glyphtag' in vals:
-                new_flag = vals['use_name_glyphtag']
-                if not rec.use_name_glyphtag and new_flag:
-                    if not rec.name_glyphtag:
-                        vals.setdefault('name_glyphtag', rec.name)
-                if rec.use_name_glyphtag and not new_flag:
-                    vals.setdefault('name_glyphtag', "")
+            # Name GlyphTag:
+            if 'name' in vals:
+                if not rec.name_glyphtag:
+                    vals.setdefault('name_glyphtag', rec.name)
 
-            # Address GlyphTag: False → True
-            if 'use_address_glyphtag' in vals:
-                new_flag = vals['use_address_glyphtag']
-                if not rec.use_address_glyphtag and new_flag:
-                    if not rec.city_glyphtag:
-                        vals.setdefault('city_glyphtag', rec.city)
-                    if not rec.street_glyphtag:
-                        vals.setdefault('street_glyphtag', rec.street)
-                    if not rec.street2_glyphtag:
-                        vals.setdefault('street2_glyphtag', rec.street2)
-                if rec.use_address_glyphtag and not new_flag:
-                    vals.setdefault('city_glyphtag', "")
-                    vals.setdefault('street_glyphtag', "")
-                    vals.setdefault('street2_glyphtag', "")
+            # Address GlyphTag
+            if 'city' in vals:
+                if not rec.city_glyphtag:
+                    vals.setdefault('city_glyphtag', rec.city)
+            if 'street' in vals:
+                if not rec.street_glyphtag:
+                    vals.setdefault('street_glyphtag', rec.street)
+            if 'street2' in vals:
+                if not rec.street2_glyphtag:
+                    vals.setdefault('street2_glyphtag', rec.street2)
 
         return super(ResPartner, self).write(vals)

@@ -25,8 +25,8 @@
 
                             <!-- IVS name split -->
                             <group string="Name Split (IVS)">
-                                <field name="family_name_ivs" readonly="1"/>
-                                <field name="given_name_ivs" readonly="1" invisible="is_company"/>
+                                <field name="family_name_ivs" class="joo-font" readonly="1"/>
+                                <field name="given_name_ivs" class="joo-font" readonly="1" invisible="is_company"/>
                             </group>
 
                             <!-- Kana -->
