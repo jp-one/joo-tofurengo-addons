@@ -8,6 +8,19 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
 
+                <!-- Insert Kana fields right after company_type -->
+                <xpath expr="//field[@name='company_type']" position="after">
+                    <div class="d-flex gap-2 my-1">
+                        <field name="family_kana" 
+                            placeholder="Family Hiragana" 
+                            class="flex-grow-1"/>
+                        <field name="given_kana" 
+                            placeholder="Given Hiragana" 
+                            class="flex-grow-1" 
+                            invisible="is_company"/>
+                    </div>
+                </xpath>
+
                 <xpath expr="//notebook" position="inside">
 
                     <!-- ========================= -->
@@ -17,24 +30,6 @@
                         
                         <group string="Name / Kana">                            
                             
-                            <!-- Raw name split -->
-                            <group string="Name Split (Raw)">
-                                <field name="family_name" readonly="1"/>
-                                <field name="given_name" readonly="1" invisible="is_company"/>
-                            </group>
-
-                            <!-- IVS name split -->
-                            <group string="Name Split (IVS)">
-                                <field name="family_name_ivs" class="joo-font" readonly="1"/>
-                                <field name="given_name_ivs" class="joo-font" readonly="1" invisible="is_company"/>
-                            </group>
-
-                            <!-- Kana -->
-                            <group string="Furigana (Kana)">
-                                <field name="family_name_kana"/>
-                                <field name="given_name_kana" invisible="is_company"/>
-                            </group>
-
                             <!-- Flag -->
                             <field name="use_name_glyphtag"/>
 
@@ -52,6 +47,18 @@
                             <h1 class="mb-0 w-md-75">
                                 <field name="name_ivs" readonly="1" class="text-break d-block joo-font"/>
                             </h1>
+
+                            <!-- Raw name split -->
+                            <group string="Name Split (Raw)">
+                                <field name="family_name" readonly="1"/>
+                                <field name="given_name" readonly="1" invisible="is_company"/>
+                            </group>
+
+                            <!-- IVS name split -->
+                            <group string="Name Split (IVS)">
+                                <field name="family_name_ivs" class="joo-font" readonly="1"/>
+                                <field name="given_name_ivs" class="joo-font" readonly="1" invisible="is_company"/>
+                            </group>
 
                         </group>
 
