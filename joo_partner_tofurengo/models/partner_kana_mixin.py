@@ -6,8 +6,8 @@ class JooTofurengoPartnerKanaMixin(models.AbstractModel):
     _name = 'joo.tofurengo.partner.kana.mixin'
     _description = 'Partner Kana Mixin'
 
-    family_kana = fields.Char("Family Kana", index=True)
-    given_kana = fields.Char("Given Kana", index=True)
+    family_kana = fields.Char("Family Kana",tracking=True, index=True)
+    given_kana = fields.Char("Given Kana", tracking=True, index=True)
 
     def _normalize_kana_text(self, text):
         """Convert full-width spaces to half-width, strip leading/trailing spaces, and convert Katakana to Hiragana."""
