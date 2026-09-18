@@ -11,13 +11,20 @@
                 <!-- Insert Kana fields right after company_type -->
                 <xpath expr="//field[@name='company_type']" position="after">
                     <div class="d-flex gap-2 my-1">
+                        <!-- Kana Fields for Persons -->
                         <field name="family_kana" 
                             placeholder="Family Hiragana" 
-                            class="flex-grow-1"/>
+                            class="flex-grow-1" 
+                            invisible="is_company"/>
                         <field name="given_kana" 
                             placeholder="Given Hiragana" 
                             class="flex-grow-1" 
                             invisible="is_company"/>
+                        <!-- Kana Fields for Companies -->
+                        <field name="family_kana" 
+                            placeholder="Company Hiragana" 
+                            class="flex-grow-1"
+                            invisible="not is_company"/>
                     </div>
                 </xpath>
 
@@ -28,32 +35,29 @@
                     <!-- ========================= -->
                     <page string="Name (GlyphTag)" name="name_glyphtag_tab">
                         
-                        <group string="Name">                            
-                            
+                        <group>
                             <!-- Flag -->
-                            <field name="use_name_glyphtag"/>
-
-                            <!-- GlyphTag (Name) -->
-                            <group string="GlyphTag (Name)">
-                                <h1 class="mb-0 w-md-75">
-                                    <field name="name_glyphtag"
-                                        widget="text"
-                                        options="{'line_breaks': False}"
-                                        class="text-break d-block joo-font"
-                                        placeholder="GlyphTag for Name"
-                                        required="type == 'contact' and use_name_glyphtag"/>
-                                </h1>
-                            </group>
-                                                    
-                            <!-- IVS (Name) -->
-                            <group string="IVS (Name)">
-                                <h1 class="mb-0 w-md-75">
-                                    <field name="name_ivs" readonly="1" class="text-break d-block joo-font"/>
-                                </h1>
-                            </group>
-
+                            <field name="use_name_glyphtag" string="Use GlyphTag"/>
                         </group>
 
+                        <!-- GlyphTag (Name) -->
+                        <label for="name_glyphtag" string="Name (IVS)"/>
+                        <h1 class="mb-0">
+                            <field name="name_glyphtag"
+                                widget="text"
+                                options="{'line_breaks': False}"
+                                class="text-break d-block joo-font"
+                                placeholder="GlyphTag for Name"
+                                required="type == 'contact' and use_name_glyphtag"/>
+                        </h1>
+
+                        <!-- IVS (Name) -->
+                        <label for="name_glyphtag" string="Name (IVS)"/>
+                        <h1 class="mb-0">
+                            <field name="name_ivs"
+                                readonly="1"
+                                class="text-break d-block joo-font"/>
+                        </h1>
                     </page>
 
                     <!-- ========================= -->
@@ -61,25 +65,25 @@
                     <!-- ========================= -->
                     <page string="Address (GlyphTag)" name="address_glyphtag_tab">
 
-                        <group string="Address">
-
+                        <group>
                             <!-- Flag -->
-                            <field name="use_address_glyphtag"/>
+                            <field name="use_address_glyphtag" string="Use GlyphTag"/>
+                        </group>
 
+                        <group>
                             <!-- GlyphTag (Address) -->
-                            <group string="GlyphTag (Address)">
+                            <group>
                                 <field name="city_glyphtag"/>
                                 <field name="street_glyphtag"/>
                                 <field name="street2_glyphtag"/>
                             </group>
 
                             <!-- IVS (Address) -->
-                            <group string="IVS (Address)">
+                            <group>
                                 <field name="city_ivs" readonly="1" class="joo-font"/>
                                 <field name="street_ivs" readonly="1" class="joo-font"/>
                                 <field name="street2_ivs" readonly="1" class="joo-font"/>
                             </group>
-
                         </group>
 
                     </page>
