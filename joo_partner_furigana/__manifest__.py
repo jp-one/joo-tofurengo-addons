@@ -1,5 +1,5 @@
 {
-    'name': "joo_partner_tofurengo",
+    'name': "joo_partner_furigana",
 
     'summary': "Short (1 phrase/line) summary of the module's purpose",
 
@@ -16,19 +16,19 @@ Long description of module's purpose
     'category': 'Uncategorized',
     'version': '0.1',
 
-    # any module necessary for this one to work correctly
-    'depends': ['base', 'joo_tofurengo', 'joo_glyph_fonts'],
-    
-    # always loaded
-    'data': [
-        'views/res_partner_views.xml',
-    ],
-    
-    # only loaded in demonstration mode
-    'demo': [
-        'demo/demo.xml',
-    ],
+    'depends': ['base'],
 
+    'external_dependencies': {
+        'python': [
+            'jaconv',
+        ],
+    },
+
+    'data': [
+        'views/res_partner_furigana_views.xml',
+        'views/res_partner_furigana_contacts_views.xml',
+    ],
+    
     'license': 'LGPL-3',
 }
 

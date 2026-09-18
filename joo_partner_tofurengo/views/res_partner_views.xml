@@ -8,26 +8,6 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
 
-                <!-- Insert Kana fields right after company_type -->
-                <xpath expr="//field[@name='company_type']" position="after">
-                    <div class="d-flex gap-2 my-1">
-                        <!-- Kana Fields for Persons -->
-                        <field name="family_kana" 
-                            placeholder="Family Hiragana" 
-                            class="flex-grow-1" 
-                            invisible="is_company"/>
-                        <field name="given_kana" 
-                            placeholder="Given Hiragana" 
-                            class="flex-grow-1" 
-                            invisible="is_company"/>
-                        <!-- Kana Fields for Companies -->
-                        <field name="family_kana" 
-                            placeholder="Company Hiragana" 
-                            class="flex-grow-1"
-                            invisible="not is_company"/>
-                    </div>
-                </xpath>
-
                 <xpath expr="//notebook" position="inside">
 
                     <!-- ========================= -->

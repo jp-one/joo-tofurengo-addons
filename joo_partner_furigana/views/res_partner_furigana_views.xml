@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ============================================================= -->
+        <!-- 1. Main Form View: Add furigana under the company_type field   -->
+        <!-- ============================================================= -->
+        <record id="view_partner_form_inherit_furigana" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit.furigana</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+
+                <!-- Insert furigana after the h1 that contains name -->
+                <xpath expr="//h1[field[@name='name']]" position="after">
+                    <div class="w-100 my-1">
+                        <field name="furigana" placeholder="Furigana"/>
+                    </div>
+                </xpath>
+
+            </field>
+        </record>
+
+
+        <!-- ============================================================= -->
+        <!-- 2. List View: Add furigana after display_name                  -->
+        <!-- ============================================================= -->
+        <record id="view_partner_list_inherit_furigana" model="ir.ui.view">
+            <field name="name">res.partner.list.inherit.furigana</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+
+                <!-- Insert furigana after display_name -->
+                <xpath expr="//list/field[@name='display_name']" position="after">
+                    <field name="furigana" string="Furigana" optional="hidden"/>
+                </xpath>
+
+            </field>
+        </record>
+
+
+        <!-- ============================================================= -->
+        <!-- 3. Kanban View: Add furigana inside the main block            -->
+        <!-- ============================================================= -->
+        <record id="res_partner_kanban_view_inherit_furigana" model="ir.ui.view">
+            <field name="name">res.partner.kanban.inherit.furigana</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+            <field name="arch" type="xml">
+
+                <!-- Add furigana inside kanban main block -->
+                <xpath expr="//main" position="inside">
+                    <div t-if="record.furigana.raw_value">
+                        <i class="fa fa-fw me-1 fa-language text-primary"/>
+                        <field name="furigana"/>
+                    </div>
+                </xpath>
+
+            </field>
+        </record>
+
+
+        <!-- ============================================================= -->
+        <!-- 4. Search View: Add furigana as a searchable field            -->
+        <!-- ============================================================= -->
+        <record id="view_res_partner_filter_inherit_furigana" model="ir.ui.view">
+            <field name="name">res.partner.search.inherit.furigana</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+
+                <!-- Add furigana search field -->
+                <xpath expr="//search" position="inside">
+                    <field name="furigana" filter_domain="[('furigana', 'ilike', self)]"/>
+                </xpath>
+
+            </field>
+        </record>
+
+
+        <!-- ============================================================= -->
+        <!-- 5. Simple Form View: Add furigana under the first group       -->
+        <!-- ============================================================= -->
+        <record id="view_partner_simple_form_inherit_furigana" model="ir.ui.view">
+            <field name="name">res.partner.simple.form.inherit.furigana</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_simple_form"/>
+            <field name="arch" type="xml">
+
+                <!-- Add furigana field -->
+                <xpath expr="//group" position="after">
+                    <group string="Furigana">
+                        <field name="furigana"/>
+                    </group>
+                </xpath>
+
+            </field>
+        </record>
+
+
+        <!-- ============================================================= -->
+        <!-- 6. Address Form View: Add furigana under the name header      -->
+        <!-- ============================================================= -->
+        <record id="view_partner_address_form_inherit_furigana" model="ir.ui.view">
+            <field name="name">res.partner.address.form.inherit.furigana</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_address_form"/>
+            <field name="arch" type="xml">
+
+                <!-- Insert furigana under the name header -->
+                <xpath expr="//h1/field[@name='name']" position="after">
+                    <div class="d-flex my-1">
+                        <field name="furigana"/>
+                    </div>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>
