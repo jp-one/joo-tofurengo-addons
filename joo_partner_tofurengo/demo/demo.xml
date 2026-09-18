@@ -1,30 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
-<!--
-          <record id="object0" model="joo_partner_tofurengo.joo_partner_tofurengo">
-            <field name="name">Object 0</field>
-            <field name="value">0</field>
-          </record>
+    <data noupdate="1">
 
-          <record id="object1" model="joo_partner_tofurengo.joo_partner_tofurengo">
-            <field name="name">Object 1</field>
-            <field name="value">10</field>
-          </record>
+        <!-- レコード 1: 東京都葛飾区 -->
+        <record id="demo_partner_katsushika" model="res.partner">
+            <field name="is_company">True</field>
+            <field name="family_kana">とうきょう</field>
+            <field name="given_kana">かつしか</field>
+            <field name="use_address_glyphtag">True</field>
+            <field name="use_name_glyphtag">True</field>
+            <field name="name_glyphtag">東京都 {MJ022336}飾区 {{MJ022336}</field>
+            <field name="city_glyphtag">{MJ022336}飾区</field>
+            <field name="street_glyphtag">{{MJ022336} = {MJ022336}</field>
+            <field name="street2_glyphtag">{{MJ022336}</field>
+        </record>
 
-          <record id="object2" model="joo_partner_tofurengo.joo_partner_tofurengo">
-            <field name="name">Object 2</field>
-            <field name="value">20</field>
-          </record>
+        <!-- レコード 2: 奈良県葛城市 -->
+        <record id="demo_partner_katsuragi" model="res.partner">
+            <field name="is_company">True</field>
+            <field name="family_kana">なら</field>
+            <field name="given_kana">かつらぎ</field>
+            <field name="use_name_glyphtag">True</field>
+            <field name="name_glyphtag">奈良県 {MJ022335}城市	{{MJ022335}</field>
+            <field name="use_address_glyphtag">True</field>
+            <field name="city_glyphtag">{MJ022335}城市</field>
+            <field name="street_glyphtag">{{MJ022335} = {MJ022335}</field>
+            <field name="street2_glyphtag">{{MJ022335}</field>
+        </record>
 
-          <record id="object3" model="joo_partner_tofurengo.joo_partner_tofurengo">
-            <field name="name">Object 3</field>
-            <field name="value">30</field>
-          </record>
-
-          <record id="object4" model="joo_partner_tofurengo.joo_partner_tofurengo">
-            <field name="name">Object 4</field>
-            <field name="value">40</field>
-          </record>
--->
     </data>
 </odoo>

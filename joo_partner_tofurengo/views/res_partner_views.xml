@@ -26,38 +26,30 @@
                     <!-- ========================= -->
                     <!-- Name Tab -->
                     <!-- ========================= -->
-                    <page string="Name / Kana" name="kana_name_tab">
+                    <page string="Name (GlyphTag)" name="name_glyphtag_tab">
                         
-                        <group string="Name / Kana">                            
+                        <group string="Name">                            
                             
                             <!-- Flag -->
                             <field name="use_name_glyphtag"/>
 
                             <!-- GlyphTag (Name) -->
-                            <h1 class="mb-0 w-md-75">
-                                <field name="name_glyphtag"
-                                    widget="text"
-                                    options="{'line_breaks': False}"
-                                    class="text-break d-block joo-font"
-                                    placeholder="GlyphTag for Name"
-                                    required="type == 'contact' and use_name_glyphtag"/>
-                            </h1>
+                            <group string="GlyphTag (Name)">
+                                <h1 class="mb-0 w-md-75">
+                                    <field name="name_glyphtag"
+                                        widget="text"
+                                        options="{'line_breaks': False}"
+                                        class="text-break d-block joo-font"
+                                        placeholder="GlyphTag for Name"
+                                        required="type == 'contact' and use_name_glyphtag"/>
+                                </h1>
+                            </group>
                                                     
                             <!-- IVS (Name) -->
-                            <h1 class="mb-0 w-md-75">
-                                <field name="name_ivs" readonly="1" class="text-break d-block joo-font"/>
-                            </h1>
-
-                            <!-- Raw name split -->
-                            <group string="Name Split (Raw)">
-                                <field name="family_name" readonly="1"/>
-                                <field name="given_name" readonly="1" invisible="is_company"/>
-                            </group>
-
-                            <!-- IVS name split -->
-                            <group string="Name Split (IVS)">
-                                <field name="family_name_ivs" class="joo-font" readonly="1"/>
-                                <field name="given_name_ivs" class="joo-font" readonly="1" invisible="is_company"/>
+                            <group string="IVS (Name)">
+                                <h1 class="mb-0 w-md-75">
+                                    <field name="name_ivs" readonly="1" class="text-break d-block joo-font"/>
+                                </h1>
                             </group>
 
                         </group>
@@ -67,19 +59,12 @@
                     <!-- ========================= -->
                     <!-- Address Tab -->
                     <!-- ========================= -->
-                    <page string="Address" name="address_tab">
+                    <page string="Address (GlyphTag)" name="address_glyphtag_tab">
 
                         <group string="Address">
 
                             <!-- Flag -->
                             <field name="use_address_glyphtag"/>
-
-                            <!-- Raw address -->
-                            <group string="Address Fields">
-                                <field name="city"/>
-                                <field name="street"/>
-                                <field name="street2"/>
-                            </group>
 
                             <!-- GlyphTag (Address) -->
                             <group string="GlyphTag (Address)">
