@@ -23,7 +23,7 @@
                 <!-- ============================================================= -->
                 <!-- repos/odoo/odoo/addons/base/views/res_partner_views.xml L.245 -->
                 <xpath expr="//field[@name='child_ids']//form//h3[field[@name='name']]" position="after">
-                    <div class="w-100 my-1">
+                    <div class="w-100">
                         <field name="furigana" placeholder="Furigana"/>
                     </div>
                 </xpath>
