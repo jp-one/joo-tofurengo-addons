@@ -21,6 +21,26 @@
         </record>
 
         <!-- ============================================================= -->
+        <!-- Simple Form View: Add furigana after name                     -->
+        <!-- ============================================================= -->
+        <record id="view_partner_simple_form_inherit_furigana" model="ir.ui.view">
+            <field name="name">res.partner.simple.form.inherit.furigana</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_simple_form"/>
+            <field name="arch" type="xml">
+
+                <!-- Add furigana field -->
+                <!-- repos/odoo/odoo/addons/base/views/res_partner_views.xml L.50 -->
+                <xpath expr="//form//h1[field[@name='name']]" position="after">
+                    <div class="w-100">
+                        <field name="furigana" placeholder="Furigana"/>
+                    </div>
+                </xpath>
+
+            </field>
+        </record>
+
+        <!-- ============================================================= -->
         <!-- Main Form View: Add furigana before email                     -->
         <!-- ============================================================= -->
         <record id="view_partner_form_inherit_furigana" model="ir.ui.view">
@@ -33,7 +53,7 @@
                 <!-- repos/odoo/odoo/addons/base/views/res_partner_views.xml L.143 -->
                 <xpath expr="//form//div[field[@name='email']]" position="before">
                     <div class="w-md-75">
-                        <i class="fa fa-fw me-1 fa-tag text-primary" title="Furigana"/>
+                        <i class="fa fa-fw me-1 fa-comment text-primary" title="Furigana"/>
                         <field name="furigana" placeholder="Furigana"/>
                     </div>
                 </xpath>
@@ -54,7 +74,7 @@
                 <!-- repos/odoo/odoo/addons/base/views/res_partner_views.xml L.143 -->
                 <xpath expr="//kanban//main/div[field[@name='email']]" position="before">
                     <div t-if="record.furigana.raw_value">
-                        <i class="fa fa-fw me-1 fa-tag text-primary" title="Furigana"/>
+                        <i class="fa fa-fw me-1 fa-comment text-primary" title="Furigana"/>
                         <field name="furigana"/>
                     </div>
                 </xpath>

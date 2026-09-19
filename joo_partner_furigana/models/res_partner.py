@@ -1,3 +1,5 @@
+import re
+
 import jaconv
 from odoo import models, fields, api
 
@@ -65,9 +67,12 @@ class ResPartner(models.Model):
         """
         if not text:
             return ""
-        text = text.replace("\u3000", " ").strip()
-        zenkaku = jaconv.h2z(text, kana=True)
-        return jaconv.kata2hira(zenkaku)
+        text = text.replace("\u3000", " ")
+        text = text.strip()
+        text = re.sub(r"\s+", " ", text)
+        text = jaconv.h2z(text, kana=True)
+        text = jaconv.kata2hira(text)
+        return text
 
     # ----------------------------------------------------------------------
     # Onchange normalization
