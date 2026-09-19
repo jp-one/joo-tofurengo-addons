@@ -16,7 +16,7 @@ Long description of module's purpose
     'category': 'Uncategorized',
     'version': '0.1',
 
-    'depends': ['base'],
+    'depends': ['base', 'base_setup'],
 
     'external_dependencies': {
         'python': [
@@ -25,6 +25,7 @@ Long description of module's purpose
     },
 
     'data': [
+        'views/res_config_settings_views.xml',
         'views/res_partner_furigana_views.xml',
         'views/res_partner_furigana_contacts_views.xml',
     ],
