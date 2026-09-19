@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_partner_form_inherit_glyph_kana" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit.glyph.kana</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//notebook" position="inside">
+
+                    <!-- ========================= -->
+                    <!-- Name Tab -->
+                    <!-- ========================= -->
+                    <page string="Name (GlyphTag)" name="name_glyphtag_tab">
+                        
+                        <group>
+                            <!-- Flag -->
+                            <field name="use_name_glyphtag" string="Use GlyphTag"/>
+                        </group>
+
+                        <!-- GlyphTag (Name) -->
+                        <label for="name_glyphtag" string="Name (IVS)"/>
+                        <h1 class="mb-0">
+                            <field name="name_glyphtag"
+                                widget="text"
+                                options="{'line_breaks': False}"
+                                class="text-break d-block joo-font"
+                                placeholder="GlyphTag for Name"
+                                required="type == 'contact' and use_name_glyphtag"/>
+                        </h1>
+
+                        <!-- IVS (Name) -->
+                        <label for="name_glyphtag" string="Name (IVS)"/>
+                        <h1 class="mb-0">
+                            <field name="name_ivs"
+                                readonly="1"
+                                class="text-break d-block joo-font"/>
+                        </h1>
+                    </page>
+
+                    <!-- ========================= -->
+                    <!-- Address Tab -->
+                    <!-- ========================= -->
+                    <page string="Address (GlyphTag)" name="address_glyphtag_tab">
+
+                        <group>
+                            <!-- Flag -->
+                            <field name="use_address_glyphtag" string="Use GlyphTag"/>
+                        </group>
+
+                        <group>
+                            <!-- GlyphTag (Address) -->
+                            <group>
+                                <field name="city_glyphtag"/>
+                                <field name="street_glyphtag"/>
+                                <field name="street2_glyphtag"/>
+                            </group>
+
+                            <!-- IVS (Address) -->
+                            <group>
+                                <field name="city_ivs" readonly="1" class="joo-font"/>
+                                <field name="street_ivs" readonly="1" class="joo-font"/>
+                                <field name="street2_ivs" readonly="1" class="joo-font"/>
+                            </group>
+                        </group>
+
+                    </page>
+
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

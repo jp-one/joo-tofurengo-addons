@@ -1,0 +1,11 @@
+# Python dependencies for custom Odoo addons.
+# Installed automatically in the Dev Container via:
+#     postCreateCommand: pip3 install -r ./custom_addons/requirements.tofurengo.txt
+
+# Use a custom index URL to install Tofurengo packages from a specific repository.
+--index-url https://jp-rad.github.io/tofurengo/simple/
+tofurengo
+tofurengo-data-mj-plus-v4-10
+tofurengo-data-mj-plusx-v1-20
+tofurengo-data-mj-v6-02-201
+tofurengo-data-mj-v6-02-201-onka

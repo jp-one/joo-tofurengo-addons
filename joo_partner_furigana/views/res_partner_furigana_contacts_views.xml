@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- ============================================================= -->
+        <!-- Form View (Contacts): Add furigana                            -->
+        <!-- ============================================================= -->
+        <record id="view_partner_form_contacts_inherit_furigana" model="ir.ui.view">
+            <field name="name">res.partner.form.contacts.inherit.furigana</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+
+                <!-- ============================================================= -->
+                <!-- Contacts Tab: kanban - add furigana before email              -->
+                <!-- ============================================================= -->
+                <!-- repos/odoo/odoo/addons/base/views/res_partner_views.xml L.214 -->
+                <xpath expr="//field[@name='child_ids']//kanban//main/div[field[@name='email']]" position="before">
+                    <div t-if="record.furigana.raw_value" class="text-truncate">
+                        <i class="fa fa-fw me-1 fa-tag text-primary" title="Furigana"/>
+                        <field name="furigana"/>
+                    </div>
+                </xpath>
+
+                <!-- ============================================================= -->
+                <!-- Contacts Tab: form - add furigana before email (full width)   -->
+                <!-- ============================================================= -->
+                <!-- repos/odoo/odoo/addons/base/views/res_partner_views.xml L.247 -->
+                <xpath expr="//field[@name='child_ids']//form//div[field[@name='email']]" position="before">
+                    <div class="d-flex align-items-baseline">
+                        <i class="fa fa-fw me-1 fa-tag text-primary" title="Furigana"/>
+                        <field name="furigana" class="w-100" placeholder="Furigana"/>
+                    </div>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>
