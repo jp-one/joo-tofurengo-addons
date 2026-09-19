@@ -5,8 +5,7 @@
         <!-- レコード 1: 東京都葛飾区 -->
         <record id="demo_partner_katsushika" model="res.partner">
             <field name="is_company">True</field>
-            <field name="family_kana">とうきょう</field>
-            <field name="given_kana">かつしか</field>
+            <field name="furigana">とうきょう かつしか</field>
             <field name="use_address_glyphtag">True</field>
             <field name="use_name_glyphtag">True</field>
             <field name="name_glyphtag">東京都 {MJ022336}飾区 {{MJ022336}</field>
@@ -18,8 +17,7 @@
         <!-- レコード 2: 奈良県葛城市 -->
         <record id="demo_partner_katsuragi" model="res.partner">
             <field name="is_company">True</field>
-            <field name="family_kana">なら</field>
-            <field name="given_kana">かつらぎ</field>
+            <field name="furigana">なら かつらぎ</field>
             <field name="use_name_glyphtag">True</field>
             <field name="name_glyphtag">奈良県 {MJ022335}城市	{{MJ022335}</field>
             <field name="use_address_glyphtag">True</field>
