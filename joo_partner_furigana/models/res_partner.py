@@ -1,7 +1,7 @@
 import re
-
 import jaconv
 from odoo import models, fields, api
+from .res_config_settings import get_furigana_type_setting
 
 
 class ResPartner(models.Model):
@@ -9,9 +9,8 @@ class ResPartner(models.Model):
     Extension of `res.partner` to support Japanese phonetic reading (furigana).
 
     Features:
-    - Input normalization (space normalization, kana normalization)
+    - Normalization type controlled via System Parameter (`get_furigana_type_setting()`)
     - Integration with Odoo's name search (`_rec_names_search`)
-    - Display name enhancement (append furigana)
     - Automatic normalization on create/write/onchange
     - Ordering prioritizes furigana and newest records first
     """
@@ -21,9 +20,8 @@ class ResPartner(models.Model):
 
     furigana = fields.Char(
         string="Furigana",
-        tracking=True,
         index=True,
-        help="Phonetic reading of the partner name in Hiragana."
+        help="Phonetic reading of the partner name."
     )
 
     # ----------------------------------------------------------------------
@@ -43,35 +41,53 @@ class ResPartner(models.Model):
             self._rec_names_search.append('furigana')
 
     # ----------------------------------------------------------------------
-    # Normalization helper
+    # System Settings Helper
     # ----------------------------------------------------------------------
-    def _normalize_furigana(self, text):
+    def _get_furigana_type_setting(self) -> str:
         """
-        Normalize furigana input.
+        Fetch the furigana normalization type from system parameters.
+        Possible values: 'hiragana', 'katakana', 'none'.
+        """
+        return get_furigana_type_setting(self)
+    
+    # ----------------------------------------------------------------------
+    # Normalization helpers
+    # ----------------------------------------------------------------------
+    def _sanitize_spaces(self, text: str) -> str:
+            """Helper to normalize spaces by converting full-width spaces and collapsing multiple whitespaces."""
+            if not text:
+                return ""
+            text = text.replace("\u3000", "\u0020")
+            text = text.strip()
+            text = re.sub(r"\s+", "\u0020", text)
+            return text
 
-        Steps:
-        - Replace full-width spaces with half-width spaces
-        - Strip whitespace
-        - Convert half-width kana to full-width kana
-        - Convert Katakana to Hiragana
+    def _normalize_furigana(self, text: str, mode: str) -> str:
+        """Normalize furigana input based on system settings or specified mode.
 
         Parameters
         ----------
         text : str
-            Raw user input.
+            Raw text input.
+        mode : str
+            'hiragana', 'katakana', or 'none'.
 
         Returns
         -------
         str
-            Normalized Hiragana string.
+            Normalized string.
         """
         if not text:
             return ""
-        text = text.replace("\u3000", " ")
-        text = text.strip()
-        text = re.sub(r"\s+", " ", text)
-        text = jaconv.h2z(text, kana=True)
-        text = jaconv.kata2hira(text)
+        text = self._sanitize_spaces(text)
+        if mode == 'hiragana':
+            text = text.upper()
+            text = jaconv.h2z(text, ignore="\u0020", kana=True, ascii=True, digit=True)
+            text = jaconv.kata2hira(text)
+        elif mode == 'katakana':
+            text = text.upper()
+            text = jaconv.h2z(text, ignore="\u0020", kana=True, ascii=True, digit=True)
+            text = jaconv.hira2kata(text)
         return text
 
     # ----------------------------------------------------------------------
@@ -83,7 +99,8 @@ class ResPartner(models.Model):
         Normalize furigana when the user edits the field in the UI.
         """
         if self.furigana:
-            self.furigana = self._normalize_furigana(self.furigana)
+            mode = self._get_furigana_type_setting()
+            self.furigana = self._normalize_furigana(self.furigana, mode=mode)
 
     # ----------------------------------------------------------------------
     # Create override
@@ -92,20 +109,11 @@ class ResPartner(models.Model):
     def create(self, vals_list):
         """
         Normalize furigana before creating new records.
-
-        Parameters
-        ----------
-        vals_list : list[dict]
-            List of value dictionaries for new records.
-
-        Returns
-        -------
-        ResPartner
-            Created partner records.
         """
+        mode = self._get_furigana_type_setting()
         for vals in vals_list:
             if vals.get('furigana'):
-                vals['furigana'] = self._normalize_furigana(vals['furigana'])
+                vals['furigana'] = self._normalize_furigana(vals['furigana'], mode=mode)
         return super().create(vals_list)
 
     # ----------------------------------------------------------------------
@@ -114,17 +122,8 @@ class ResPartner(models.Model):
     def write(self, vals):
         """
         Normalize furigana before updating existing records.
-
-        Parameters
-        ----------
-        vals : dict
-            Values to update.
-
-        Returns
-        -------
-        bool
-            True if the update succeeds.
         """
         if vals.get('furigana'):
-            vals['furigana'] = self._normalize_furigana(vals['furigana'])
+            mode = self._get_furigana_type_setting()
+            vals['furigana'] = self._normalize_furigana(vals['furigana'], mode=mode)
         return super().write(vals)
