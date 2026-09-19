@@ -2,8 +2,11 @@
 <odoo>
     <data>
         
-        <record id="res_partner_child_views_inherit_furigana" model="ir.ui.view">
-            <field name="name">res.partner.child.views.inherit.furigana</field>
+        <!-- ============================================================= -->
+        <!-- Form View (Contacts): Add furigana                            -->
+        <!-- ============================================================= -->
+        <record id="view_partner_form_contacts_inherit_furigana" model="ir.ui.view">
+            <field name="name">res.partner.form.contacts.inherit.furigana</field>
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
