@@ -70,22 +70,6 @@ class ResPartner(models.Model):
         return jaconv.kata2hira(zenkaku)
 
     # ----------------------------------------------------------------------
-    # Display name override
-    # ----------------------------------------------------------------------
-    @api.depends('furigana')
-    def _compute_display_name(self):
-        """
-        Append furigana to the computed display name.
-
-        Example:
-            "John Smith" → "John Smith (hiragana)"
-        """
-        super()._compute_display_name()
-        for partner in self:
-            if partner.furigana:
-                partner.display_name = f"{partner.display_name} ({partner.furigana})"
-
-    # ----------------------------------------------------------------------
     # Onchange normalization
     # ----------------------------------------------------------------------
     @api.onchange('furigana')
