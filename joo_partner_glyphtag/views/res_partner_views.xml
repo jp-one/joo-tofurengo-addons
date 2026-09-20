@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_partner_form_inherit_glyph_kana" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit.glyph.kana</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//notebook" position="inside">
+
+                    <!-- ========================= -->
+                    <!-- GlyphTag Tab -->
+                    <!-- ========================= -->
+                    <page string="Name / Address (GlyphTag)" name="joo_glyphtag_tab">
+                        
+                        <group>
+                            <!-- Flag -->
+                            <field name="use_glyphtag" string="Use GlyphTag"/>
+                        </group>
+
+                        <group>
+                            <group>
+                                <!-- Glyph (Name) -->
+                                <label for="name_glyph" string="Name (Glyph)"/>
+                                <h1 class="mb-0">
+                                    <field name="name_glyph"
+                                        readonly="1"
+                                        class="text-break d-block joo-font"/>
+                                </h1>
+                            </group>
+                            <group invisible="not use_glyphtag">
+                                <!-- GlyphTag (Name) -->
+                                <label for="name_glyphtag" string="Name (GlyphTag)"/>
+                                <h1 class="mb-0">
+                                    <field name="name_glyphtag"
+                                        widget="text"
+                                        options="{'line_breaks': False}"
+                                        class="text-break d-block joo-font"
+                                        placeholder="GlyphTag for Name"
+                                        required="type == 'contact' and use_glyphtag"/>
+                                </h1>
+                            </group>
+                        </group>
+
+                        <group>
+                            <!-- Glyph (Address) -->
+                            <group>
+                                <field name="street_glyph" readonly="1" class="joo-font"/>
+                                <field name="street2_glyph" readonly="1" class="joo-font"/>
+                                <field name="city_glyph" readonly="1" class="joo-font"/>
+                            </group>
+
+                            <!-- GlyphTag (Address) -->
+                            <group invisible="not use_glyphtag">
+                                <field name="street_glyphtag" placeholder="GlyphTag for Street"/>
+                                <field name="street2_glyphtag" placeholder="GlyphTag for Street2"/>
+                                <field name="city_glyphtag" placeholder="GlyphTag for City"/>
+                            </group>
+
+                        </group>
+
+                    </page>
+
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

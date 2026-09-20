@@ -1,5 +1,5 @@
 {
-    'name': "joo_partner_tofurengo",
+    'name': "joo_partner_glyphtag",
 
     'summary': "Short (1 phrase/line) summary of the module's purpose",
 
@@ -18,12 +18,11 @@ Long description of module's purpose
 
     # any module necessary for this one to work correctly
     'depends': ['base', 'joo_tofurengo', 'joo_glyph_fonts'],
-    
+
     # always loaded
     'data': [
         'views/res_partner_views.xml',
     ],
-    
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',
