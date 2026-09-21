@@ -8,6 +8,36 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
 
+                <!-- Glyph Tag Enabled -->
+                <!-- repos/odoo/odoo/addons/base/views/res_partner_views.xml L.139 -->
+                <xpath expr="//h1[field[@name='name']]" position="before">
+                    <div class="d-flex align-items-baseline w-md-50" invisible="not use_glyphtag">
+                        <i class="fa fa-fw me-1 fa-lock text-primary" title="Glyph Tag Enabled"/>
+                        <div class="badge rounded-pill text-bg-warning ms-2">Glyph Tag Enabled</div>
+                    </div>
+                </xpath>
+
+                <!-- readonly="use_glyphtag"  -->
+                <!-- repos/odoo/odoo/addons/base/views/res_partner_views.xml L.L.140-183 -->
+                <xpath expr="//form" position="inside">
+                    <field name="use_glyphtag" invisible="1"/>
+                </xpath>
+                <xpath expr="(//field[@name='name'])[1]" position="attributes">
+                    <attribute name="readonly">use_glyphtag</attribute>
+                </xpath>
+                <xpath expr="(//field[@name='name'])[2]" position="attributes">
+                    <attribute name="readonly">use_glyphtag</attribute>
+                </xpath>
+                <xpath expr="//field[@name='street']" position="attributes">
+                    <attribute name="readonly">use_glyphtag</attribute>
+                </xpath>
+                <xpath expr="//field[@name='street2']" position="attributes">
+                    <attribute name="readonly">use_glyphtag</attribute>
+                </xpath>
+                <xpath expr="//field[@name='city']" position="attributes">
+                    <attribute name="readonly">use_glyphtag</attribute>
+                </xpath>
+
                 <!-- Name / Address GlyphTag -->
                 <!-- repos/odoo/odoo/addons/base/views/res_partner_views.xml L.199 -->
                 <xpath expr="//notebook" position="inside">
@@ -20,11 +50,6 @@
                         <group>
                             <!-- Flag -->
                             <field name="use_glyphtag" string="Use GlyphTag"/>
-                            <!-- Glyph Editor-->
-                            <button name="open_glyph_editor"
-                                    string="Glyph Edit"
-                                    type="object"
-                                    class="btn-secondary"/>
                         </group>
 
                         <group>
@@ -72,38 +97,9 @@
 
                 </xpath>
 
-                <!-- readonly="use_glyphtag"  -->
-                <!-- repos/odoo/odoo/addons/base/views/res_partner_views.xml L.L.140-183 -->
-                <xpath expr="//form" position="inside">
-                    <field name="use_glyphtag" invisible="1"/>
-                </xpath>
-                <xpath expr="(//field[@name='name'])[1]" position="attributes">
-                    <attribute name="readonly">use_glyphtag</attribute>
-                </xpath>
-                <xpath expr="(//field[@name='name'])[2]" position="attributes">
-                    <attribute name="readonly">use_glyphtag</attribute>
-                </xpath>
-                <xpath expr="//field[@name='street']" position="attributes">
-                    <attribute name="readonly">use_glyphtag</attribute>
-                </xpath>
-                <xpath expr="//field[@name='street2']" position="attributes">
-                    <attribute name="readonly">use_glyphtag</attribute>
-                </xpath>
-                <xpath expr="//field[@name='city']" position="attributes">
-                    <attribute name="readonly">use_glyphtag</attribute>
-                </xpath>
-
-                <!-- Glyph Tag Enabled -->
-                <!-- repos/odoo/odoo/addons/base/views/res_partner_views.xml L.139 -->
-                <xpath expr="//h1[field[@name='name']]" position="before">
-                    <div class="d-flex align-items-baseline w-md-50" invisible="not use_glyphtag">
-                        <i class="fa fa-fw me-1 fa-lock text-primary" title="Glyph Tag Enabled"/>
-                        <div class="badge rounded-pill text-bg-warning ms-2">Glyph Tag Enabled</div>
-                    </div>
-                </xpath>
 
             </field>
         </record>
-
+        
     </data>
 </odoo>

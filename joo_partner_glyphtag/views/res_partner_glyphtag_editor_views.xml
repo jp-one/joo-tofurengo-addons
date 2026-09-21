@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- 1. 単一編集用 ダイアログ Form View -->
+    <record id="view_partner_glyph_editor_dialog" model="ir.ui.view">
+        <field name="name">res.partner.form.glyph.editor.dialog</field>
+        <field name="model">res.partner</field>
+        <field name="priority">999</field>
+        <field name="arch" type="xml">
+            <form string="Glyph Editor">
+                <sheet>
+                    <group>
+                        <field name="use_glyphtag"/>
+                    </group>
+                    
+                    <group string="Glyph">
+                        <field name="name_glyph" class="joo-font" readonly="1"/>
+                        <field name="city_glyph" class="joo-font" readonly="1"/>
+                        <field name="street_glyph" class="joo-font" readonly="1"/>
+                        <field name="street2_glyph" class="joo-font" readonly="1"/>
+                    </group>
+
+                    <group invisible="not use_glyphtag" string="GlyphTag">
+                        <field name="name_glyphtag"/>
+                        <field name="city_glyphtag"/>
+                        <field name="street_glyphtag"/>
+                        <field name="street2_glyphtag"/>
+                    </group>
+
+                    <group invisible="use_glyphtag" string="Standard">
+                        <field name="name"/>
+                        <field name="city"/>
+                        <field name="street"/>
+                        <field name="street2"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Save" special="save" class="btn-primary" data-hotkey="s"/>
+                    <button string="Discard" special="cancel" class="btn-secondary" data-hotkey="j"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Window Action -->
+    <record id="action_partner_glyph_editor_dialog" model="ir.actions.act_window">
+        <field name="name">Glyph Editor</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_id" ref="view_partner_glyph_editor_dialog"/>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- Server Action -->
+    <record id="action_server_open_glyph_editor_wizard" model="ir.actions.server">
+        <field name="name">Open Glyph Editor Wizard</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="binding_model_id" ref="base.model_res_partner"/>
+        <field name="binding_view_types">form,list</field>
+        <field name="state">code</field>
+        <field name="code">
+action = records.action_open_glyph_editor_wizard()
+        </field>
+    </record>
+   
+</odoo>
