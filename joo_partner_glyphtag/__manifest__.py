@@ -21,7 +21,9 @@ Long description of module's purpose
 
     # always loaded
     'data': [
+        'security/ir.model.access.csv',
         'views/res_partner_views.xml',
+        'wizard/partner_glyphtag_editor_wizard_views.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

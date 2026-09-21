@@ -4,7 +4,10 @@ from odoo.exceptions import ValidationError
 
 
 class ResPartner(models.Model):
-    _inherit = "res.partner"
+    _inherit = [
+        "joo.partner.glyphtag.editor.mixin",
+        "res.partner",
+    ]
 
     # ---------------------------------------------------------
     # Input Fields

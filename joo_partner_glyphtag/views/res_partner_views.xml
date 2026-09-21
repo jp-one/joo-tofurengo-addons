@@ -20,6 +20,11 @@
                         <group>
                             <!-- Flag -->
                             <field name="use_glyphtag" string="Use GlyphTag"/>
+                            <!-- Glyph Editor-->
+                            <button name="open_glyph_editor"
+                                    string="Glyph Edit"
+                                    type="object"
+                                    class="btn-secondary"/>
                         </group>
 
                         <group>
