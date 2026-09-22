@@ -10,15 +10,26 @@
             <form string="Glyph Editor">
                 <sheet>
 
-                    <group>                
+                    <group>
                         <field string="Name" name="name_glyph" class="joo-font fs-1 bg-light border rounded p-2 text-black" readonly="1"/>
                         <field string="Street" name="street_glyph" class="joo-font fs-1 bg-light border rounded p-2 text-black" readonly="1"/>
                         <field string="Street2" name="street2_glyph" class="joo-font fs-1 bg-light border rounded p-2 text-black" readonly="1"/>
                         <field string="City" name="city_glyph" class="joo-font fs-1 bg-light border rounded p-2 text-black" readonly="1"/>
-                        
-                        <field name="use_glyphtag"/>
                     </group>
                     
+                    <group>
+                        <group>
+                            <field name="use_glyphtag"/>
+                        </group>
+                        <group invisible="not use_glyphtag">
+                            <span/>
+                            <div class="d-flex align-items-baseline w-md-50">
+                                <i class="fa fa-fw me-1 fa-lock text-primary" title="Glyph Tag Enabled"/>
+                                <div class="badge rounded-pill text-bg-warning ms-2">Glyph Tag</div>
+                            </div>
+                        </group>
+                    </group>
+                        
                     <group invisible="use_glyphtag" string="Standard">
                         <field name="name"/>
                         <field name="street"/>
