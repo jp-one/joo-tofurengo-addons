@@ -55,13 +55,11 @@ class PartnerGlyphtagMixin(models.AbstractModel):
         text = text.replace("\u3000", "\u0020").strip()
         return re.sub(r"\s+", "\u0020", text)
 
-    def _convert_glyphtag(self, text: str, use_base: bool = False) -> str:
+    def _render(self, text: str, use_base: bool = False) -> str:
         if not text:
             return ""
         svc = self.env['joo_tofurengo.glyph_service'].sudo()
         result = svc.normalize(text)
-        if not getattr(result, 'success', False):
-            return ""
         return svc.render(result.text, use_base=use_base) or ""
 
     def _simplify(self, text: str) -> str:
@@ -92,7 +90,7 @@ class PartnerGlyphtagMixin(models.AbstractModel):
 
                 if rec.use_glyphtag:
                     tag_val = getattr(rec, tag_field)
-                    glyph_val = rec._convert_glyphtag(tag_val, use_base=False)
+                    glyph_val = rec._render(tag_val, use_base=False)
                 else:
                     glyph_val = getattr(rec, fname) or ""
 
@@ -110,7 +108,7 @@ class PartnerGlyphtagMixin(models.AbstractModel):
                 tag_val = self._simplify(tag_val)
                 tag_val = self._sanitize_spaces(tag_val)
                 setattr(self, tag_field, tag_val)
-                base_val = self._convert_glyphtag(tag_val, use_base=True)
+                base_val = self._render(tag_val, use_base=True)
                 if base_val:
                     setattr(self, base_field, base_val)
 
@@ -152,7 +150,7 @@ class PartnerGlyphtagMixin(models.AbstractModel):
                 current_tag_val = record[tag_field] if record else ''
                 tag_val = vals.get(tag_field, current_tag_val)
                 tag_val = self._sanitize_spaces(tag_val)
-                base_val = self._convert_glyphtag(tag_val, use_base=True)
+                base_val = self._render(tag_val, use_base=True)
                 vals[base_field] = base_val
                 vals[tag_field] = tag_val
             else:
