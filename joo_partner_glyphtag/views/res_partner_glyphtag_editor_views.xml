@@ -9,30 +9,30 @@
         <field name="arch" type="xml">
             <form string="Glyph Editor">
                 <sheet>
-                    <group>
+
+                    <group>                
+                        <field string="Name" name="name_glyph" class="joo-font fs-1 bg-light border rounded p-2 text-black" readonly="1"/>
+                        <field string="Street" name="street_glyph" class="joo-font fs-1 bg-light border rounded p-2 text-black" readonly="1"/>
+                        <field string="Street2" name="street2_glyph" class="joo-font fs-1 bg-light border rounded p-2 text-black" readonly="1"/>
+                        <field string="City" name="city_glyph" class="joo-font fs-1 bg-light border rounded p-2 text-black" readonly="1"/>
+                        
                         <field name="use_glyphtag"/>
                     </group>
                     
-                    <group string="Glyph">
-                        <field name="name_glyph" class="joo-font" readonly="1"/>
-                        <field name="city_glyph" class="joo-font" readonly="1"/>
-                        <field name="street_glyph" class="joo-font" readonly="1"/>
-                        <field name="street2_glyph" class="joo-font" readonly="1"/>
+                    <group invisible="use_glyphtag" string="Standard">
+                        <field name="name"/>
+                        <field name="street"/>
+                        <field name="street2"/>
+                        <field name="city"/>
                     </group>
 
                     <group invisible="not use_glyphtag" string="GlyphTag">
-                        <field name="name_glyphtag"/>
-                        <field name="city_glyphtag"/>
-                        <field name="street_glyphtag"/>
-                        <field name="street2_glyphtag"/>
+                        <field string="Name" name="name_glyphtag"/>
+                        <field string="Street" name="street_glyphtag"/>
+                        <field string="Street2" name="street2_glyphtag"/>
+                        <field string="City" name="city_glyphtag"/>
                     </group>
 
-                    <group invisible="use_glyphtag" string="Standard">
-                        <field name="name"/>
-                        <field name="city"/>
-                        <field name="street"/>
-                        <field name="street2"/>
-                    </group>
                 </sheet>
                 <footer>
                     <button string="Save" special="save" class="btn-primary" data-hotkey="s"/>
@@ -53,7 +53,7 @@
 
     <!-- Server Action -->
     <record id="action_server_open_glyph_editor_wizard" model="ir.actions.server">
-        <field name="name">Open Glyph Editor Wizard</field>
+        <field name="name">Open Glyph Editor</field>
         <field name="model_id" ref="base.model_res_partner"/>
         <field name="binding_model_id" ref="base.model_res_partner"/>
         <field name="binding_view_types">form,list</field>
