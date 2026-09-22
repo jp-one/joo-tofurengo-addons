@@ -31,14 +31,14 @@
                     </group>
                         
                     <group invisible="use_glyphtag" string="Standard">
-                        <field name="name"/>
+                        <field name="name" required="type == 'contact' and not use_glyphtag"/>
                         <field name="street"/>
                         <field name="street2"/>
                         <field name="city"/>
                     </group>
 
-                    <group invisible="not use_glyphtag" string="GlyphTag">
-                        <field string="Name" name="name_glyphtag"/>
+                    <group invisible="not use_glyphtag" string="Glyph Tag">
+                        <field string="Name" name="name_glyphtag" required="type == 'contact' and use_glyphtag"/>
                         <field string="Street" name="street_glyphtag"/>
                         <field string="Street2" name="street2_glyphtag"/>
                         <field string="City" name="city_glyphtag"/>
