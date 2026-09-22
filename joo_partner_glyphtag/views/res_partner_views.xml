@@ -8,6 +8,9 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
 
+                <!-- ============================================================= -->
+                <!-- Main Form                                                     -->
+                <!-- ============================================================= -->
                 <xpath expr="//form" position="inside">
                     <field name="use_glyphtag" invisible="1"/>
                 </xpath>
@@ -17,7 +20,7 @@
                 <xpath expr="//h1[field[@name='name']]" position="before">
                     <div class="d-flex align-items-baseline w-md-50" invisible="not use_glyphtag">
                         <i class="fa fa-fw me-1 fa-lock text-primary" title="Glyph Tag Enabled"/>
-                        <div class="badge rounded-pill text-bg-warning ms-2">Glyph Tag Enabled</div>
+                        <div class="badge rounded-pill text-bg-warning ms-2">Glyph Tag</div>
                     </div>
                 </xpath>
 
@@ -36,6 +39,37 @@
                     <attribute name="readonly">use_glyphtag</attribute>
                 </xpath>
                 <xpath expr="//field[@name='city']" position="attributes">
+                    <attribute name="readonly">use_glyphtag</attribute>
+                </xpath>
+
+                <!-- ============================================================= -->
+                <!-- Contacts Tab: child form                                      -->
+                <!-- ============================================================= -->
+                <!-- repos/odoo/odoo/addons/base/views/res_partner_views.xml L.237 -->
+                <xpath expr="//field[@name='child_ids']//form" position="inside">
+                    <field name="use_glyphtag" invisible="1"/>
+                </xpath>
+
+                <!-- Glyph Tag Enabled -->
+                <!-- repos/odoo/odoo/addons/base/views/res_partner_views.xml L.243 -->
+                <xpath expr="//field[@name='child_ids']//form//h3[field[@name='name']]" position="before">
+                    <div class="d-flex align-items-baseline w-md-50" invisible="not use_glyphtag">
+                        <i class="fa fa-fw me-1 fa-lock text-primary" title="Glyph Tag Enabled"/>
+                        <div class="badge rounded-pill text-bg-warning ms-2">Glyph Tag</div>
+                    </div>
+                </xpath>
+                <!-- repos/odoo/odoo/addons/base/views/res_partner_views.xml L.244 -->
+                <xpath expr="//field[@name='child_ids']//form//field[@name='name']" position="attributes">
+                    <attribute name="readonly">use_glyphtag</attribute>
+                </xpath>
+                <!-- repos/odoo/odoo/addons/base/views/res_partner_views.xml L.L.268-270 -->
+                <xpath expr="//field[@name='child_ids']//form//field[@name='street']" position="attributes">
+                    <attribute name="readonly">use_glyphtag</attribute>
+                </xpath>
+                <xpath expr="//field[@name='child_ids']//form//field[@name='street2']" position="attributes">
+                    <attribute name="readonly">use_glyphtag</attribute>
+                </xpath>
+                <xpath expr="//field[@name='child_ids']//form//field[@name='city']" position="attributes">
                     <attribute name="readonly">use_glyphtag</attribute>
                 </xpath>
 
