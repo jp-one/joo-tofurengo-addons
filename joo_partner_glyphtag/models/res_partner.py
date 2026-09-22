@@ -70,6 +70,12 @@ class ResPartner(models.Model):
         svc = self.env['joo_tofurengo.glyph_service'].sudo()
         return svc.simplify(text) or ""
 
+    def _inverse(self, text: str) -> str:
+        if not text:
+            return ""
+        svc = self.env['joo_tofurengo.glyph_service'].sudo()
+        return svc.inverse(text) or ""
+
     # ---------------------------------------------------------
     # Compute Methods
     # ---------------------------------------------------------
@@ -147,14 +153,17 @@ class ResPartner(models.Model):
             if use_tag:
                 current_tag_val = record[tag_field] if record else ''
                 tag_val = vals.get(tag_field, current_tag_val)
+                tag_val = self._sanitize_spaces(tag_val)
                 base_val = self._convert_glyphtag(tag_val, use_base=True)
                 vals[base_field] = base_val
+                vals[tag_field] = tag_val
             else:
                 current_base_val = record[base_field] if record else ''
                 base_val = vals.get(base_field, current_base_val) or ""
                 base_val = self._sanitize_spaces(base_val)
+                tag_val = self._inverse(base_val)
                 vals[base_field] = base_val
-                vals[tag_field] = base_val
+                vals[tag_field] = tag_val
 
     @api.model_create_multi
     def create(self, vals_list):
