@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_glyphtag_editor_popup" model="ir.ui.view">
+        <field name="name">joo.partner.glyphtag.editor.popup</field>
+        <field name="model">joo.partner.glyphtag.editor.wizard</field>
+        <field name="arch" type="xml">
+
+            <form string="Glyph Editor">
+
+                <group>
+                    <field name="use_glyphtag"/>
+                </group>
+
+                <group>
+                    <field name="name_glyph" class="joo_font joo_font_large"/>
+                    <field name="city_glyph" class="joo_font joo_font_large"/>
+                    <field name="street_glyph" class="joo_font joo_font_large"/>
+                    <field name="street2_glyph" class="joo_font joo_font_large"/>
+                </group>
+
+                <notebook>
+                    <page string="Base">
+                        <group>
+                            <field name="name" readonly="use_glyphtag == True"/>
+                            <field name="city" readonly="use_glyphtag == True"/>
+                            <field name="street" readonly="use_glyphtag == True"/>
+                            <field name="street2" readonly="use_glyphtag == True"/>
+                        </group>
+                    </page>
+
+                    <page string="GlyphTag" invisible="use_glyphtag == False">
+                        <group>
+                            <field name="name_glyphtag"/>
+                            <field name="city_glyphtag"/>
+                            <field name="street_glyphtag"/>
+                            <field name="street2_glyphtag"/>
+                        </group>
+                    </page>
+                </notebook>
+
+                <footer>
+                    <button string="Apply" type="object" name="apply_glyph" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+
+            </form>
+
+        </field>
+    </record>
+
+</odoo>
