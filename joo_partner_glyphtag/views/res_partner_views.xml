@@ -13,7 +13,7 @@
                     <field name="use_glyphtag" invisible="1"/>
                 </xpath>
 
-                <!-- Glyph Editor Button -->
+                <!-- GlyphTag Editor Button -->
                 <!-- repos/odoo/odoo/addons/base/views/res_partner_views.xml L.172 -->
                 <xpath expr="//div[@class='o_address_format']" position="after">
                     <span/>
@@ -22,8 +22,8 @@
                             class="btn btn-link p-0 text-start align-baseline border-0 text-decoration-none"
                             invisible="use_glyphtag">
                         <div class="d-flex align-items-center text-nowrap">
-                            <i class="fa fa-fw me-1 fa-unlock text-primary" title="Glyph Tag Disabled"/>
-                            <span class="badge rounded-pill text-bg-info ms-1">Open Glyph Editor</span>
+                            <i class="fa fa-fw me-1 fa-unlock text-primary" title="GlyphTag Disabled"/>
+                            <span class="badge rounded-pill text-bg-info ms-1">Open GlyphTag Editor</span>
                         </div>
                     </button>
                     <button type="object"
@@ -31,8 +31,8 @@
                             class="btn btn-link p-0 text-start align-baseline border-0 text-decoration-none"
                             invisible="not use_glyphtag">
                         <div class="d-flex align-items-center text-nowrap">
-                            <i class="fa fa-fw me-1 fa-lock text-primary" title="Glyph Tag Enabled"/>
-                            <span class="badge rounded-pill text-bg-warning ms-1">Glyph Tag</span>
+                            <i class="fa fa-fw me-1 fa-lock text-primary" title="GlyphTag Enabled"/>
+                            <span class="badge rounded-pill text-bg-warning ms-1">GlyphTag</span>
                         </div>
                     </button>
                 </xpath>
@@ -61,7 +61,7 @@
                     <field name="use_glyphtag" invisible="1"/>
                 </xpath>
 
-                <!-- Child Form: Glyph Editor Button -->
+                <!-- Child Form: GlyphTag Editor Button -->
                 <!-- repos/odoo/odoo/addons/base/views/res_partner_views.xml L.278 -->
                 <xpath expr="//field[@name='child_ids']//form//field[@name='company_id']" position="before">
                     <span/>
@@ -70,8 +70,8 @@
                             class="btn btn-link p-0 text-start align-baseline border-0 text-decoration-none"
                             invisible="use_glyphtag">
                         <div class="d-flex align-items-center text-nowrap">
-                            <i class="fa fa-fw me-1 fa-unlock text-primary" title="Glyph Tag Disabled"/>
-                            <span class="badge rounded-pill text-bg-info ms-1">Open Glyph Editor</span>
+                            <i class="fa fa-fw me-1 fa-unlock text-primary" title="GlyphTag Disabled"/>
+                            <span class="badge rounded-pill text-bg-info ms-1">Open GlyphTag Editor</span>
                         </div>
                     </button>
                     <button type="object"
@@ -79,8 +79,8 @@
                             class="btn btn-link p-0 text-start align-baseline border-0 text-decoration-none"
                             invisible="not use_glyphtag">
                         <div class="d-flex align-items-center text-nowrap">
-                            <i class="fa fa-fw me-1 fa-lock text-primary" title="Glyph Tag Enabled"/>
-                            <span class="badge rounded-pill text-bg-warning ms-1">Glyph Tag</span>
+                            <i class="fa fa-fw me-1 fa-lock text-primary" title="GlyphTag Enabled"/>
+                            <span class="badge rounded-pill text-bg-warning ms-1">GlyphTag</span>
                         </div>
                     </button>
                 </xpath>

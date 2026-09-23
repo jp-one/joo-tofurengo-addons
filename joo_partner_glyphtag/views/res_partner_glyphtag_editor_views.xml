@@ -26,8 +26,8 @@
                         <group invisible="not use_glyphtag">
                             <span/>
                             <div class="d-flex align-items-baseline w-md-50">
-                                <i class="fa fa-fw me-1 fa-lock text-primary" title="Glyph Tag Enabled"/>
-                                <div class="badge rounded-pill text-bg-warning ms-2">Glyph Tag</div>
+                                <i class="fa fa-fw me-1 fa-lock text-primary" title="GlyphTag Enabled"/>
+                                <div class="badge rounded-pill text-bg-warning ms-2">GlyphTag</div>
                             </div>
                         </group>
                     </group>
@@ -41,7 +41,7 @@
                     </group>
 
                     <!-- GlyphTag input fields (Visible when GlyphTag is enabled) -->
-                    <group invisible="not use_glyphtag" string="Glyph Tag">
+                    <group invisible="not use_glyphtag" string="GlyphTag">
                         <field string="Name" name="name_glyphtag" required="type == 'contact' and use_glyphtag"/>
                         <field string="Street" name="street_glyphtag"/>
                         <field string="Street2" name="street2_glyphtag"/>
@@ -59,7 +59,7 @@
 
     <!-- Dialog Window Action -->
     <record id="action_partner_glyphtag_editor" model="ir.actions.act_window">
-        <field name="name">Glyph Tag Editor</field>
+        <field name="name">GlyphTag Editor</field>
         <field name="res_model">res.partner</field>
         <field name="view_id" ref="view_partner_glyphtag_editor_dialog"/>
         <field name="view_mode">form</field>
@@ -68,7 +68,7 @@
 
     <!-- Contextual Action (Action Menu Entry) -->
     <record id="action_server_partner_glyphtag_editor" model="ir.actions.server">
-        <field name="name">Open Glyph Tag Editor</field>
+        <field name="name">Open GlyphTag Editor</field>
         <field name="model_id" ref="base.model_res_partner"/>
         <field name="binding_model_id" ref="base.model_res_partner"/>
         <field name="binding_view_types">form</field>
