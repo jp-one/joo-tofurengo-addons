@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <!-- 1. 単一編集用 ダイアログ Form View -->
+    <!-- Single Record Editor Dialog Form View -->
     <record id="view_partner_glyphtag_editor_dialog" model="ir.ui.view">
         <field name="name">res.partner.form.glyphtag.editor.dialog</field>
         <field name="model">res.partner</field>
@@ -10,6 +10,7 @@
             <form string="Glyph Editor">
                 <sheet>
 
+                    <!-- Preview of generated glyphs -->
                     <group>
                         <field string="Name" name="name_glyph" class="joo-font fs-1 bg-light border rounded p-2 text-black" readonly="1"/>
                         <field string="Street" name="street_glyph" class="joo-font fs-1 bg-light border rounded p-2 text-black" readonly="1"/>
@@ -17,6 +18,7 @@
                         <field string="City" name="city_glyph" class="joo-font fs-1 bg-light border rounded p-2 text-black" readonly="1"/>
                     </group>
                     
+                    <!-- GlyphTag toggle and indicator status -->
                     <group>
                         <group>
                             <field name="use_glyphtag"/>
@@ -30,6 +32,7 @@
                         </group>
                     </group>
                         
+                    <!-- Standard input fields (Visible when GlyphTag is disabled) -->
                     <group invisible="use_glyphtag" string="Standard">
                         <field name="name" required="type == 'contact' and not use_glyphtag"/>
                         <field name="street"/>
@@ -37,6 +40,7 @@
                         <field name="city"/>
                     </group>
 
+                    <!-- GlyphTag input fields (Visible when GlyphTag is enabled) -->
                     <group invisible="not use_glyphtag" string="Glyph Tag">
                         <field string="Name" name="name_glyphtag" required="type == 'contact' and use_glyphtag"/>
                         <field string="Street" name="street_glyphtag"/>
@@ -53,7 +57,7 @@
         </field>
     </record>
 
-    <!-- Window Action -->
+    <!-- Dialog Window Action -->
     <record id="action_partner_glyphtag_editor" model="ir.actions.act_window">
         <field name="name">Glyph Tag Editor</field>
         <field name="res_model">res.partner</field>
@@ -62,7 +66,7 @@
         <field name="target">new</field>
     </record>
 
-    <!-- Server Action -->
+    <!-- Contextual Action (Action Menu Entry) -->
     <record id="action_server_partner_glyphtag_editor" model="ir.actions.server">
         <field name="name">Open Glyph Tag Editor</field>
         <field name="model_id" ref="base.model_res_partner"/>

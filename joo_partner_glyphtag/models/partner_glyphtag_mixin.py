@@ -1,16 +1,17 @@
 import re
-from odoo import models, fields, api
+
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 
 class PartnerGlyphtagMixin(models.AbstractModel):
-    _name = 'joo.partner.glyphtag.mixin'
-    _description = 'Partner GlyphTag Mixin'
+    _name = "joo.partner.glyphtag.mixin"
+    _description = "Partner GlyphTag Mixin"
 
     # ---------------------------------------------------------
     # Field Mapping Sets
     # ---------------------------------------------------------
-    BASE_FIELDS = ['name', 'street', 'street2', 'city']
+    BASE_FIELDS = ["name", "street", "street2", "city"]
 
     # ---------------------------------------------------------
     # Input Fields
@@ -60,7 +61,7 @@ class PartnerGlyphtagMixin(models.AbstractModel):
         """Render normal/glyph text using the Glyph service."""
         if not text:
             return ""
-        svc = self.env['joo_tofurengo.glyph_service'].sudo()
+        svc = self.env["joo_tofurengo.glyph_service"].sudo()
         result = svc.normalize(text)
         return svc.render(result.text, use_base=use_base) or ""
 
@@ -68,14 +69,14 @@ class PartnerGlyphtagMixin(models.AbstractModel):
         """Simplify text using the Glyph service."""
         if not text:
             return ""
-        svc = self.env['joo_tofurengo.glyph_service'].sudo()
+        svc = self.env["joo_tofurengo.glyph_service"].sudo()
         return svc.simplify(text) or ""
 
     def _inverse(self, text: str) -> str:
         """Convert standard text back into GlyphTag format."""
         if not text:
             return ""
-        svc = self.env['joo_tofurengo.glyph_service'].sudo()
+        svc = self.env["joo_tofurengo.glyph_service"].sudo()
         return svc.inverse(text) or ""
 
     # ---------------------------------------------------------
@@ -93,21 +94,21 @@ class PartnerGlyphtagMixin(models.AbstractModel):
                 glyph_val = getattr(rec, base_field) or ""
             setattr(rec, glyph_field, glyph_val)
 
-    @api.depends('use_glyphtag', 'name_glyphtag', 'name')
+    @api.depends("use_glyphtag", "name_glyphtag", "name")
     def _compute_name_glyph(self):
-        self._compute_single_glyph('name')
+        self._compute_single_glyph("name")
 
-    @api.depends('use_glyphtag', 'street_glyphtag', 'street')
+    @api.depends("use_glyphtag", "street_glyphtag", "street")
     def _compute_street_glyph(self):
-        self._compute_single_glyph('street')
+        self._compute_single_glyph("street")
 
-    @api.depends('use_glyphtag', 'street2_glyphtag', 'street2')
+    @api.depends("use_glyphtag", "street2_glyphtag", "street2")
     def _compute_street2_glyph(self):
-        self._compute_single_glyph('street2')
+        self._compute_single_glyph("street2")
 
-    @api.depends('use_glyphtag', 'city_glyphtag', 'city')
+    @api.depends("use_glyphtag", "city_glyphtag", "city")
     def _compute_city_glyph(self):
-        self._compute_single_glyph('city')
+        self._compute_single_glyph("city")
 
     # ---------------------------------------------------------
     # Onchange Handlers
@@ -124,21 +125,21 @@ class PartnerGlyphtagMixin(models.AbstractModel):
             if base_val:
                 setattr(self, base_field, base_val)
 
-    @api.onchange('use_glyphtag', 'name_glyphtag')
+    @api.onchange("use_glyphtag", "name_glyphtag")
     def _onchange_name_glyphtag(self):
-        self._process_glyphtag_field_change('name')
+        self._process_glyphtag_field_change("name")
 
-    @api.onchange('use_glyphtag', 'street_glyphtag')
+    @api.onchange("use_glyphtag", "street_glyphtag")
     def _onchange_street_glyphtag(self):
-        self._process_glyphtag_field_change('street')
+        self._process_glyphtag_field_change("street")
 
-    @api.onchange('use_glyphtag', 'street2_glyphtag')
+    @api.onchange("use_glyphtag", "street2_glyphtag")
     def _onchange_street2_glyphtag(self):
-        self._process_glyphtag_field_change('street2')
+        self._process_glyphtag_field_change("street2")
 
-    @api.onchange('use_glyphtag', 'city_glyphtag')
+    @api.onchange("use_glyphtag", "city_glyphtag")
     def _onchange_city_glyphtag(self):
-        self._process_glyphtag_field_change('city')
+        self._process_glyphtag_field_change("city")
 
     def _process_base_field_change(self, base_field: str):
         """Process changes when a specific base field or use_glyphtag is updated."""
@@ -147,66 +148,72 @@ class PartnerGlyphtagMixin(models.AbstractModel):
             text = self._sanitize_spaces(text)
             setattr(self, base_field, text)
 
-    @api.onchange('use_glyphtag', 'name')
+    @api.onchange("use_glyphtag", "name")
     def _onchange_name(self):
-        self._process_base_field_change('name')
+        self._process_base_field_change("name")
 
-    @api.onchange('use_glyphtag', 'street')
+    @api.onchange("use_glyphtag", "street")
     def _onchange_street(self):
-        self._process_base_field_change('street')
+        self._process_base_field_change("street")
 
-    @api.onchange('use_glyphtag', 'street2')
+    @api.onchange("use_glyphtag", "street2")
     def _onchange_street2(self):
-        self._process_base_field_change('street2')
+        self._process_base_field_change("street2")
 
-    @api.onchange('use_glyphtag', 'city')
+    @api.onchange("use_glyphtag", "city")
     def _onchange_city(self):
-        self._process_base_field_change('city')
+        self._process_base_field_change("city")
 
     # ---------------------------------------------------------
     # Validations & Syncing Logic
     # ---------------------------------------------------------
-    @api.constrains('name_glyphtag', 'street_glyphtag', 'street2_glyphtag', 'city_glyphtag')
+    @api.constrains("name_glyphtag", "street_glyphtag", "street2_glyphtag", "city_glyphtag")
     def _check_glyphtag_fields(self):
         """Validate format for all GlyphTag fields."""
-        svc = self.env['joo_tofurengo.glyph_service'].sudo()
+        svc = self.env["joo_tofurengo.glyph_service"].sudo()
         for rec in self:
             for base_field in self.BASE_FIELDS:
                 tag_field = f"{base_field}_glyphtag"
                 tag_val = getattr(rec, tag_field)
                 if tag_val:
                     result = svc.normalize(tag_val)
-                    if not getattr(result, 'success', False):
-                        raise ValidationError(f"Invalid GlyphTag format in {base_field}.")
+                    if not getattr(result, "success", False):
+                        field_description = self._fields[tag_field].string
+                        raise ValidationError(
+                            _(
+                                "Invalid GlyphTag format in '%s'.",
+                                field_description,
+                            )
+                        )
 
     def _sync_glyphtag_payload(self, record, vals):
         """Detect modified fields in 'vals' and execute synchronization logic."""
         tag_fields = [f"{f}_glyphtag" for f in self.BASE_FIELDS]
-        target_fields = set(['use_glyphtag'] + self.BASE_FIELDS + tag_fields)
+        target_fields = set(["use_glyphtag"] + self.BASE_FIELDS + tag_fields)
 
         # Skip execution if no relevant fields are present in vals
         if not any(k in vals for k in target_fields):
             return
 
-        use_tag = vals.get('use_glyphtag', record.use_glyphtag if record else False)
+        use_tag = vals.get("use_glyphtag", record.use_glyphtag if record else False)
 
         for base_field in self.BASE_FIELDS:
             tag_field = f"{base_field}_glyphtag"
 
             # Check if this specific field requires processing (or if use_glyphtag changed)
-            is_modified = ('use_glyphtag' in vals) or (base_field in vals) or (tag_field in vals)
+            is_modified = ("use_glyphtag" in vals) or (base_field in vals) or (tag_field in vals)
             if not is_modified:
                 continue
 
             if use_tag:
-                current_tag_val = record[tag_field] if record else ''
+                current_tag_val = record[tag_field] if record else ""
                 tag_val = vals.get(tag_field, current_tag_val)
                 tag_val = self._sanitize_spaces(tag_val)
                 base_val = self._render(tag_val, use_base=True)
                 vals[base_field] = base_val
                 vals[tag_field] = tag_val
             else:
-                current_base_val = record[base_field] if record else ''
+                current_base_val = record[base_field] if record else ""
                 base_val = vals.get(base_field, current_base_val) or ""
                 base_val = self._sanitize_spaces(base_val)
                 tag_val = self._inverse(base_val)
