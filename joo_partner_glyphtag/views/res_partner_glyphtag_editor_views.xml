@@ -2,8 +2,8 @@
 <odoo>
 
     <!-- 1. 単一編集用 ダイアログ Form View -->
-    <record id="view_partner_glyph_editor_dialog" model="ir.ui.view">
-        <field name="name">res.partner.form.glyph.editor.dialog</field>
+    <record id="view_partner_glyphtag_editor_dialog" model="ir.ui.view">
+        <field name="name">res.partner.form.glyphtag.editor.dialog</field>
         <field name="model">res.partner</field>
         <field name="priority">999</field>
         <field name="arch" type="xml">
@@ -54,23 +54,23 @@
     </record>
 
     <!-- Window Action -->
-    <record id="action_partner_glyph_editor_dialog" model="ir.actions.act_window">
-        <field name="name">Glyph Editor</field>
+    <record id="action_partner_glyphtag_editor" model="ir.actions.act_window">
+        <field name="name">Glyph Tag Editor</field>
         <field name="res_model">res.partner</field>
-        <field name="view_id" ref="view_partner_glyph_editor_dialog"/>
+        <field name="view_id" ref="view_partner_glyphtag_editor_dialog"/>
         <field name="view_mode">form</field>
         <field name="target">new</field>
     </record>
 
     <!-- Server Action -->
-    <record id="action_server_open_glyph_editor_wizard" model="ir.actions.server">
-        <field name="name">Open Glyph Editor</field>
+    <record id="action_server_partner_glyphtag_editor" model="ir.actions.server">
+        <field name="name">Open Glyph Tag Editor</field>
         <field name="model_id" ref="base.model_res_partner"/>
         <field name="binding_model_id" ref="base.model_res_partner"/>
-        <field name="binding_view_types">form,list</field>
+        <field name="binding_view_types">form</field>
         <field name="state">code</field>
         <field name="code">
-action = records.action_open_glyph_editor_wizard()
+action = records.action_server_partner_glyphtag_editor()
         </field>
     </record>
    

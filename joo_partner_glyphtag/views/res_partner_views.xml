@@ -20,7 +20,7 @@
                 <xpath expr="//div[@class='o_address_format']" position="after">
                     <span/>
                     <button type="object"
-                            name="action_open_glyph_editor_wizard"
+                            name="open_joo_partner_glyphtag_editor"
                             class="btn btn-link p-0 text-start align-baseline border-0 text-decoration-none"
                             invisible="use_glyphtag">
                         <div class="d-flex align-items-center text-nowrap">
@@ -29,7 +29,7 @@
                         </div>
                     </button>
                     <button type="object"
-                            name="action_open_glyph_editor_wizard"
+                            name="open_joo_partner_glyphtag_editor"
                             class="btn btn-link p-0 text-start align-baseline border-0 text-decoration-none"
                             invisible="not use_glyphtag">
                         <div class="d-flex align-items-center text-nowrap">
@@ -70,7 +70,7 @@
                 <xpath expr="//field[@name='child_ids']//form//field[@name='company_id']" position="before">
                     <span/>
                     <button type="object"
-                            name="action_open_glyph_editor_wizard"
+                            name="open_joo_partner_glyphtag_editor"
                             class="btn btn-link p-0 text-start align-baseline border-0 text-decoration-none"
                             invisible="use_glyphtag">
                         <div class="d-flex align-items-center text-nowrap">
@@ -79,7 +79,7 @@
                         </div>
                     </button>
                     <button type="object"
-                            name="action_open_glyph_editor_wizard"
+                            name="open_joo_partner_glyphtag_editor"
                             class="btn btn-link p-0 text-start align-baseline border-0 text-decoration-none"
                             invisible="not use_glyphtag">
                         <div class="d-flex align-items-center text-nowrap">
