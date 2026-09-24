@@ -24,7 +24,7 @@ class PartnerGlyphtagMixin(models.AbstractModel):
     city_glyphtag = fields.Char("City (GlyphTag)", tracking=True)
 
     # ---------------------------------------------------------
-    # Computed Glyph Fields
+    # Computed Glyph Fields (Stored)
     # ---------------------------------------------------------
     name_glyph = fields.Char(
         string="Name (Glyph)",
@@ -45,6 +45,30 @@ class PartnerGlyphtagMixin(models.AbstractModel):
         string="City (Glyph)",
         compute="_compute_city_glyph",
         store=True,
+    )
+
+    # ---------------------------------------------------------
+    # Effective Fields for View/Report (Non-Stored)
+    # ---------------------------------------------------------
+    name_effective = fields.Char(
+        string="Name (Effective)",
+        compute="_compute_name_effective",
+        store=False,
+    )
+    street_effective = fields.Char(
+        string="Street (Effective)",
+        compute="_compute_street_effective",
+        store=False,
+    )
+    street2_effective = fields.Char(
+        string="Street2 (Effective)",
+        compute="_compute_street2_effective",
+        store=False,
+    )
+    city_effective = fields.Char(
+        string="City (Effective)",
+        compute="_compute_city_effective",
+        store=False,
     )
 
     # ---------------------------------------------------------
@@ -80,35 +104,63 @@ class PartnerGlyphtagMixin(models.AbstractModel):
         return svc.inverse(text) or ""
 
     # ---------------------------------------------------------
-    # Compute Methods
+    # Compute Methods (Glyph - Stored)
     # ---------------------------------------------------------
     def _compute_single_glyph(self, base_field: str):
         """Helper to compute glyph value for a specific base field."""
         tag_field = f"{base_field}_glyphtag"
         glyph_field = f"{base_field}_glyph"
         for rec in self:
-            if rec.use_glyphtag:
-                tag_val = getattr(rec, tag_field)
-                glyph_val = rec._render(tag_val, use_base=False)
-            else:
-                glyph_val = getattr(rec, base_field) or ""
+            tag_val = getattr(rec, tag_field) or ""
+            glyph_val = rec._render(tag_val, use_base=False)
             setattr(rec, glyph_field, glyph_val)
 
-    @api.depends("use_glyphtag", "name_glyphtag", "name")
+    # Note: use_glyphtag is omitted from depends to avoid re-computations of *_glyph on toggle
+    @api.depends("name_glyphtag", "name")
     def _compute_name_glyph(self):
         self._compute_single_glyph("name")
 
-    @api.depends("use_glyphtag", "street_glyphtag", "street")
+    @api.depends("street_glyphtag", "street")
     def _compute_street_glyph(self):
         self._compute_single_glyph("street")
 
-    @api.depends("use_glyphtag", "street2_glyphtag", "street2")
+    @api.depends("street2_glyphtag", "street2")
     def _compute_street2_glyph(self):
         self._compute_single_glyph("street2")
 
-    @api.depends("use_glyphtag", "city_glyphtag", "city")
+    @api.depends("city_glyphtag", "city")
     def _compute_city_glyph(self):
         self._compute_single_glyph("city")
+
+    # ---------------------------------------------------------
+    # Compute Methods (Effective - Non-stored)
+    # ---------------------------------------------------------
+    def _compute_single_effective(self, base_field: str):
+        """Helper to compute effective value based on use_glyphtag status."""
+        glyph_field = f"{base_field}_glyph"
+        effective_field = f"{base_field}_effective"
+        for rec in self:
+            if rec.use_glyphtag:
+                val = getattr(rec, glyph_field) or ""
+            else:
+                val = getattr(rec, base_field) or ""
+            setattr(rec, effective_field, val)
+
+    @api.depends("use_glyphtag", "name_glyph", "name")
+    def _compute_name_effective(self):
+        self._compute_single_effective("name")
+
+    @api.depends("use_glyphtag", "street_glyph", "street")
+    def _compute_street_effective(self):
+        self._compute_single_effective("street")
+
+    @api.depends("use_glyphtag", "street2_glyph", "street2")
+    def _compute_street2_effective(self):
+        self._compute_single_effective("street2")
+
+    @api.depends("use_glyphtag", "city_glyph", "city")
+    def _compute_city_effective(self):
+        self._compute_single_effective("city")
 
     # ---------------------------------------------------------
     # Onchange Handlers
@@ -125,19 +177,19 @@ class PartnerGlyphtagMixin(models.AbstractModel):
             if base_val:
                 setattr(self, base_field, base_val)
 
-    @api.onchange("use_glyphtag", "name_glyphtag")
+    @api.onchange("name_glyphtag")
     def _onchange_name_glyphtag(self):
         self._process_glyphtag_field_change("name")
 
-    @api.onchange("use_glyphtag", "street_glyphtag")
+    @api.onchange("street_glyphtag")
     def _onchange_street_glyphtag(self):
         self._process_glyphtag_field_change("street")
 
-    @api.onchange("use_glyphtag", "street2_glyphtag")
+    @api.onchange("street2_glyphtag")
     def _onchange_street2_glyphtag(self):
         self._process_glyphtag_field_change("street2")
 
-    @api.onchange("use_glyphtag", "city_glyphtag")
+    @api.onchange("city_glyphtag")
     def _onchange_city_glyphtag(self):
         self._process_glyphtag_field_change("city")
 
@@ -148,19 +200,19 @@ class PartnerGlyphtagMixin(models.AbstractModel):
             text = self._sanitize_spaces(text)
             setattr(self, base_field, text)
 
-    @api.onchange("use_glyphtag", "name")
+    @api.onchange("name")
     def _onchange_name(self):
         self._process_base_field_change("name")
 
-    @api.onchange("use_glyphtag", "street")
+    @api.onchange("street")
     def _onchange_street(self):
         self._process_base_field_change("street")
 
-    @api.onchange("use_glyphtag", "street2")
+    @api.onchange("street2")
     def _onchange_street2(self):
         self._process_base_field_change("street2")
 
-    @api.onchange("use_glyphtag", "city")
+    @api.onchange("city")
     def _onchange_city(self):
         self._process_base_field_change("city")
 

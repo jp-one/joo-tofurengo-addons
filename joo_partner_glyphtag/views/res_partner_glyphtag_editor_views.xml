@@ -10,12 +10,12 @@
             <form string="Glyph Editor">
                 <sheet>
 
-                    <!-- Preview of generated glyphs -->
+                    <!-- Preview of effective text/glyphs -->
                     <group>
-                        <field string="Name" name="name_glyph" class="joo-font fs-1 bg-light border rounded p-2 text-black" readonly="1"/>
-                        <field string="Street" name="street_glyph" class="joo-font fs-1 bg-light border rounded p-2 text-black" readonly="1"/>
-                        <field string="Street2" name="street2_glyph" class="joo-font fs-1 bg-light border rounded p-2 text-black" readonly="1"/>
-                        <field string="City" name="city_glyph" class="joo-font fs-1 bg-light border rounded p-2 text-black" readonly="1"/>
+                        <field string="Name" name="name_effective" class="joo-font fs-1 bg-light border rounded p-2 text-black" readonly="1"/>
+                        <field string="Street" name="street_effective" class="joo-font fs-1 bg-light border rounded p-2 text-black" readonly="1"/>
+                        <field string="Street2" name="street2_effective" class="joo-font fs-1 bg-light border rounded p-2 text-black" readonly="1"/>
+                        <field string="City" name="city_effective" class="joo-font fs-1 bg-light border rounded p-2 text-black" readonly="1"/>
                     </group>
                     
                     <!-- GlyphTag toggle and indicator status -->
@@ -24,16 +24,16 @@
                             <field name="use_glyphtag"/>
                         </group>
                         <group invisible="not use_glyphtag">
-                            <span/>
-                            <div class="d-flex align-items-baseline w-md-50">
+                            <div class="d-flex align-items-center">
                                 <i class="fa fa-fw me-1 fa-lock text-primary" title="GlyphTag Enabled"/>
-                                <div class="badge rounded-pill text-bg-warning ms-2">GlyphTag</div>
+                                <span class="badge rounded-pill text-bg-warning">GlyphTag Enabled</span>
                             </div>
                         </group>
                     </group>
                         
                     <!-- Standard input fields (Visible when GlyphTag is disabled) -->
                     <group invisible="use_glyphtag" string="Standard">
+                        <field name="type" invisible="1"/>
                         <field name="name" required="type == 'contact' and not use_glyphtag"/>
                         <field name="street"/>
                         <field name="street2"/>
@@ -42,6 +42,7 @@
 
                     <!-- GlyphTag input fields (Visible when GlyphTag is enabled) -->
                     <group invisible="not use_glyphtag" string="GlyphTag">
+                        <field name="type" invisible="1"/>
                         <field string="Name" name="name_glyphtag" required="type == 'contact' and use_glyphtag"/>
                         <field string="Street" name="street_glyphtag"/>
                         <field string="Street2" name="street2_glyphtag"/>
