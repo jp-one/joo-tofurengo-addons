@@ -7,14 +7,12 @@
 Long description of module's purpose
     """,
 
-    'author': "My Company",
-    'website': "https://www.yourcompany.com",
+    'author': "jp-one",
+    'website': "https://github.com/jp-one",
 
-    # Categories can be used to filter modules in modules listing
-    # Check https://github.com/odoo/odoo/blob/15.0/odoo/addons/base/data/ir_module_category_data.xml
-    # for the full list
-    'category': 'Uncategorized',
-    'version': '0.1',
+    'category': 'Tools',
+    'version': '19.0.1.0.0',
+
 
     'depends': ['base', 'base_setup'],
 
@@ -32,4 +30,3 @@ Long description of module's purpose
     
     'license': 'LGPL-3',
 }
-

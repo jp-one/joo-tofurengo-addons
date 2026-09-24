@@ -9,7 +9,7 @@
             <field name="name_glyphtag">東京都{MJ022336}飾区</field>
             <field name="city_glyphtag">{MJ022336}飾区</field>
             <field name="street_glyphtag">{{MJ022336} = {MJ022336}</field>
-            <field name="street2_glyphtag">とうきょうと かつしかく</field>
+            <field name="furigana">とうきょうと かつしかく</field>
         </record>
 
         <!-- demo partner 2: Nara Prefecture Katsuragi City -->
@@ -19,7 +19,7 @@
             <field name="name_glyphtag">奈良県{MJ022335}城市</field>
             <field name="city_glyphtag">{MJ022335}城市</field>
             <field name="street_glyphtag">{{MJ022335} = {MJ022335}</field>
-            <field name="street2_glyphtag">ならけん かつらぎし</field>
+            <field name="furigana">ならけん かつらぎし</field>
         </record>
 
     </data>

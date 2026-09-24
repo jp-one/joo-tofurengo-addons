@@ -31,10 +31,7 @@ Key Features:
         'views/res_partner_glyphtag_editor_views.xml',
         'views/res_partner_views.xml',
     ],
-    'demo': [
-        'demo/demo.xml',
-    ],
-
+    
     'installable': True,
     'application': False,
     'license': 'LGPL-3',
