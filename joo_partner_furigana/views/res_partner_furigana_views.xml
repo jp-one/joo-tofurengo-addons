@@ -62,7 +62,7 @@
         </record>
 
         <!-- ============================================================= -->
-        <!-- 4. Kanban View: Add furigana before email                     -->
+        <!-- Kanban View: Add furigana before email                        -->
         <!-- ============================================================= -->
         <record id="res_partner_kanban_view_inherit_furigana" model="ir.ui.view">
             <field name="name">res.partner.kanban.inherit.furigana</field>

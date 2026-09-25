@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- demo partner 1: Tokyo Katsushika Ward -->
+        <record id="demo_partner_katsushika" model="res.partner">
+            <field name="furigana">とうきょうと かつしかく</field>
+            <field name="is_company">True</field>
+            <field name="use_glyphtag">True</field>
+            <field name="name_glyphtag">東京都{MJ022336}飾区 {{MJ022336}</field>
+            <field name="street_glyphtag">{{{MJ022336}飾区役所}</field>
+            <field name="street2_glyphtag">({{MJ022336}飾区)</field>
+            <field name="city_glyphtag">{MJ022336}飾区</field>
+            <field name="state_id" ref="base.state_jp_jp-13"/>
+            <field name="zip">124-8555</field>
+            <field name="country_id" ref="base.jp"/>
+        </record>
+
+        <!-- demo partner 2: Nara Prefecture Katsuragi City -->
+        <record id="demo_partner_katsuragi" model="res.partner">
+            <field name="furigana">ならけん かつらぎし</field>
+            <field name="is_company">True</field>
+            <field name="use_glyphtag">True</field>
+            <field name="name_glyphtag">奈良県{MJ022335}城市 {{MJ022335}</field>
+            <field name="street_glyphtag">{{{MJ022335}城市役所}</field>
+            <field name="street2_glyphtag">({{MJ022335}城市)</field>
+            <field name="city_glyphtag">{MJ022335}城市</field>
+            <field name="state_id" ref="base.state_jp_jp-29"/>
+            <field name="zip">639-2195</field>
+            <field name="country_id" ref="base.jp"/>
+        </record>
+
+        <!-- demo partner 3: Matsuo Basho -->
+        <record id="demo_partner_basho" model="res.partner">
+            <field name="furigana">まつお ばしょう</field>
+            <field name="is_company">False</field>
+            <field name="use_glyphtag">True</field>
+            <field name="name_glyphtag">松尾 {MJ021583}{MJ022771}</field>
+            <field name="street_glyphtag">日本橋</field>
+            <field name="street2_glyphtag">{MJ090005}{MJ090271}{MJ090166}庵</field>
+            <field name="city_glyphtag">中央区</field>
+            <field name="state_id" ref="base.state_jp_jp-13"/>
+            <field name="zip">103-0022</field>
+            <field name="country_id" ref="base.jp"/>
+        </record>
+
+    </data>
+</odoo>

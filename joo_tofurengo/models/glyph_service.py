@@ -9,13 +9,13 @@ class GlyphService(models.AbstractModel):
     Service layer integrating the `tofurengo` library with Odoo.
 
     Provides normalization, rendering, simplification, and inverse rendering
-    capabilities for variant glyph tags.
+    capabilities for variant GlyphTags.
 
     Documentation:
         https://jp-rad.github.io/tofurengo/
     """
     _name = "joo_tofurengo.glyph_service"
-    _description = "Tofurengo Glyph Tag Normalization, Rendering, and Simplification Service"
+    _description = "Tofurengo GlyphTag Normalization, Rendering, and Simplification Service"
 
     def _get_normalizer(self) -> GlyphNormalizer:
         """
@@ -47,13 +47,13 @@ class GlyphService(models.AbstractModel):
 
     def normalize(self, text: str) -> NormalizeResult:
         """
-        Normalizes variant glyph tags within the given text.
+        Normalizes variant GlyphTags within the given text.
 
         Uses `tofurengo`'s `GlyphNormalizer`. The behavior is governed by
         the active Glyph System Identifier set in system parameters.
 
         Args:
-            text (str): Input string containing variant glyph tags.
+            text (str): Input string containing variant GlyphTags.
 
         Returns:
             NormalizeResult: The result object containing the normalized text
@@ -79,22 +79,22 @@ class GlyphService(models.AbstractModel):
 
     def simplify(self, text: str) -> str:
         """
-        Simplifies text by converting variant glyph tags to base characters.
+        Simplifies text by converting variant GlyphTags to base characters.
 
         Uses `tofurengo`'s `GlyphSimplifier`.
 
         Args:
-            text (str): The tagged text containing variant glyph tags.
+            text (str): The tagged text containing variant GlyphTags.
 
         Returns:
-            str: Simplified text with glyph tags stripped or reduced to base characters.
+            str: Simplified text with GlyphTags stripped or reduced to base characters.
         """
         simplifier = build_simplifier()
         return simplifier.simplify(text)
 
     def inverse(self, text: str) -> str:
         """
-        Converts Unicode text into normalized Glyph Tags using `GlyphInverseRenderer`.
+        Converts Unicode text into normalized GlyphTags using `GlyphInverseRenderer`.
 
         Performs grapheme cluster segmentation (treating IVS as single units) and
         escapes literal left braces (`{` -> `{{`).
@@ -103,7 +103,7 @@ class GlyphService(models.AbstractModel):
             text (str): Input Unicode text.
 
         Returns:
-            str: Inverse rendered text containing normalized Glyph Tags and escaped braces.
+            str: Inverse rendered text containing normalized GlyphTags and escaped braces.
         """
         inverse = GlyphInverseRenderer()
         return inverse.inverse_text(text)
