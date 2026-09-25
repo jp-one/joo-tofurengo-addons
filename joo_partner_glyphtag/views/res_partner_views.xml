@@ -15,7 +15,7 @@
 
                 <!-- GlyphTag Editor Button -->
                 <!-- repos/odoo/odoo/addons/base/views/res_partner_views.xml L.172 -->
-                <xpath expr="//div[@class='o_address_format']" position="after">
+                <xpath expr="//div[hasclass('o_address_format')]" position="after">
                     <span/>
                     <button type="object"
                             name="open_joo_partner_glyphtag_editor"

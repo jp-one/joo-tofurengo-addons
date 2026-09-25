@@ -9,13 +9,14 @@ class ResPartner(models.Model):
     1. `joo.partner.glyphtag.editor.mixin`: Action handling (e.g., opening custom view/editor).
     2. `joo.partner.glyphtag.mixin`: Core field definitions, compute methods, and payload sync logic.
     """
-
+    
     _inherit = [
         "joo.partner.glyphtag.editor.mixin",
         "joo.partner.glyphtag.mixin",
         "res.partner",
     ]
-
+    _name = 'res.partner'
+    
     # ---------------------------------------------------------
     # Validations & Synchronizations (Save / Create / Write)
     # ---------------------------------------------------------

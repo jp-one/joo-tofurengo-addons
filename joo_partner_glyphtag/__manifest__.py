@@ -23,6 +23,7 @@ Key Features:
 
     'depends': [
         'base',
+        'mail',
         'joo_tofurengo',
         'joo_glyph_fonts',
     ],

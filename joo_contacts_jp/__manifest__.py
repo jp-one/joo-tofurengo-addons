@@ -26,11 +26,9 @@ Japanese, JP, Nihongo, Furigana, GlyphTag, IVS, Contacts
         'contacts',
         'joo_partner_furigana',
         'joo_partner_glyphtag',
-        'joo_tofurengo',
-        'joo_glyph_fonts',
     ],
 
-    'data': [
+    'demo': [
         'demo/demo.xml',
     ],
 

@@ -6,6 +6,7 @@ from odoo.exceptions import ValidationError
 
 class PartnerGlyphtagMixin(models.AbstractModel):
     _name = "joo.partner.glyphtag.mixin"
+    _inherit = ['mail.thread']
     _description = "Partner GlyphTag Mixin"
 
     # ---------------------------------------------------------

@@ -1,88 +1,153 @@
 # joo-glyphtag-addons
 
-## モジュール構成
+This is a collection of Odoo add-ons that extend the Contacts application to properly handle Japanese names and addresses.  
+It provides furigana input, GlyphTag processing, variant character normalization, IVS rendering, and font configuration.  
+The `joo_contacts_jp` module integrates all of these features into a single application.
 
-joo_glyph_fonts、joo_tofurengo、joo_partner_furiganaは、独立。
-joo_partner_glyphtagは、joo_glyph_fonts、joo_tofurengoに依存。
+By installing the `joo_contacts_jp` application, you can work with MJ characters and the Administrative Standard Characters used in Japanese government systems.
+
+---
+
+## 1. Module Structure
 
 ```
-joo-glyphtag-addons/
-├── joo_glyph_fonts/        # Webフォント配信 & CSSセレクター定義
-├── joo_partner_furigana/   # ふりがな（res.partner）
-├── joo_partner_glyphtag/   # GlyphTag（res.partner）
-└── joo_tofurengo/          # 異体字変換・テキスト処理エンジン
+joo_partner_furigana       Furigana input and search for partner names
+joo_partner_glyphtag       GlyphTag input and IVS rendering
+joo_tofurengo              GlyphTag normalization engine
+joo_glyph_fonts            MJ/GJ fonts (backend)
+joo_website_glyph_fonts    MJ/GJ fonts (website)
+joo_contacts_jp            Japanese extension for Odoo Contacts
 ```
 
-### joo_glyph_fonts
+---
 
-* MJ/GJ文字フォント対応（IPAmjMincho, DWPIMincho, DWPIexMIncho）
-* フォントのweb配布
-* font-faceの定義
-* 選定変更可能なfont-face
-
-
-### joo_tofurengo
-
-* tofurengoによる正規化、描画、簡素化
-* グリフデータセットの設定変更
-
+## 2. Features of Each Module
 
 ### joo_partner_furigana
-
-* ふりがなの入力
-* ふりがなの検索
-
+- Adds a `furigana` field to `res.partner`  
+- Allows input of name readings (hiragana / katakana)  
+- Enables searching by reading  
+- Provides normalization settings for hiragana, katakana, and spacing  
 
 ### joo_partner_glyphtag
+- Adds GlyphTag input fields for names and addresses  
+- Converts GlyphTag to IVS for display  
+- Synchronizes normal text and GlyphTag  
+- Provides editing dialogs for name and address fields  
 
-* name の氏名区切り文字の正規化（asciiスペース文字化）
-* name での GlyphTag 入力が可能
-* 検索・表示用の氏名対応
-* 氏名のIVS対応（出力）
-* 住所（city, street, street2）でのGlyphTag入力が可能
-* 検索・表示用の住所対応
-* 住所のIVS対応（出力）
+### joo_tofurengo
+- Performs normalization of GlyphTag  
+- Allows switching between MJ and GJ datasets  
+- Provides internal operations: normalize / render / simplify / inverse  
 
+### joo_glyph_fonts / joo_website_glyph_fonts
+- Registers MJ/GJ fonts for backend and website  
+- Provides fixed-font CSS classes (e.g., `.joo-font--DWPIexMincho`)  
+- Applies fonts to elements using the `.joo-font` class (based on the font selected in Odoo settings)  
 
-## pythonパッケージ
+### joo_contacts_jp (Application)
+- Depends on Odoo Contacts  
+- Loads all related modules  
+- Provides demo data  
+- Appears in the Apps list (application: True)  
 
-Pythonパッケージのインストール
+---
 
-```bash
-pip3 install -r ./requirements.txt
+## 3. Examples of GlyphTag Usage
+
+Using GlyphTag allows you to input names and addresses containing variant characters.
+
+### Katsushika-ku, Tokyo
+```
+{{MJ022336}東京都{MJ022336}飾区
+とうきょうと かつしかく
+
+東京都
+{MJ022336}飾区
 ```
 
-### tofurengo
-tofurengo Pythonパッケージをgithubからインストール
+### Katsuragi-shi, Nara
+```
+{{MJ022335}奈良県{MJ022335}城市
+ならけん かつらぎし
 
-```bash
-pip3 install -r ./requirements.tofurengo.txt
+奈良県
+{MJ022335}城市
 ```
 
-**requirements.tofurengo.txt**
+---
 
-```txt:requirements.tofurengo.txt
-# Python dependencies for custom Odoo addons.
-# Installed automatically in the Dev Container via:
-#     postCreateCommand: pip3 install -r ./custom_addons/requirements.tofurengo.txt
+## 4. Font Assignment Examples
 
-# Use a custom index URL to install Tofurengo packages from a specific repository.
---index-url https://jp-rad.github.io/tofurengo/simple/
-tofurengo
-tofurengo-data-mj-plus-v4-10
-tofurengo-data-mj-plusx-v1-20
-tofurengo-data-mj-v6-02-201
-tofurengo-data-mj-v6-02-201-onka
+You can assign fonts by adding CSS classes to Odoo fields.
+
+### Common Font Assignment (uses the font selected in Odoo Settings)
+```xml
+<field name="name" class="joo-font"/>
 ```
 
-**インストールの確認**
-```bash
-pip3 list | grep tofurengo
+### Fixed Font Assignment
+```xml
+<field name="street" class="joo-font--DWPIexMincho"/>
+<field name="city" class="joo-font--DWPIMincho"/>
+<field name="state_id" class="joo-font--IPAmjMincho"/>
 ```
 
+---
 
-## フォントファイル
+## 5. Installation
 
-joo_glyph_fontsに同梱
+After installing the required Python packages,  
+please add `joo-glyphtag-addons/` to your Odoo addons path.
 
-joo_glyph_fonts\static\src\fonts
+### Python Packages
+```
+pip3 install -r requirements.txt
+pip3 install -r requirements.tofurengo.txt
+```
+
+### Module Installation
+Install the `joo_contacts_jp` module.
+
+---
+
+## 6. Included Fonts
+
+To display MJ characters and Administrative Standard Characters, the following fonts are bundled.  
+Folder: `joo-glyphtag-addons/joo_glyph_fonts/static/src/fonts`
+
+### 1. IPAmj Mincho
+* **File**: `ipamjm.ttf`  
+* **Source**: [IPAmj Mincho Download | Moji Technical Council](https://moji.or.jp/mojikiban/font/)  
+* **Rights Holder**: Information-technology Promotion Agency, Japan (IPA)  
+* **Description**: A standard Mincho font containing MJ characters used in family registers and resident records.
+
+### 2. DWPI Mincho
+* **File**: `DWPIMincho.ttf`  
+* **Distribution / Rights**: [Digital Wide-area Promotion Institute (DWPI_mincho)](https://www.digitalwidearea.org/dwpi_mincho)  
+* **Description**: A derivative font based on IPAmj Mincho, implementing the Administrative Standard Characters defined by the Japanese government.
+
+### 3. DWPIex Mincho
+* **File**: `DWPIexMincho.ttf`  
+* **Distribution / Rights**: [Digital Wide-area Promotion Institute (DWPI_mincho)](https://www.digitalwidearea.org/dwpi_mincho)  
+* **Description**: An extended version of DWPI Mincho, adding additional characters and adjusting default glyphs.
+
+---
+
+### Font License and Copyright
+
+All bundled font files are copyrighted by their respective providers.
+
+* **IPAmj Mincho**: Copyright (c) IPA  
+* **DWPI Mincho / DWPIex Mincho**: Copyright (c) Digital Wide-area Promotion Institute
+
+Since DWPI Mincho and DWPIex Mincho are derivative works of IPAmj Mincho,  
+all fonts are distributed under the **IPA Font License v1.0**.
+
+---
+
+## 7. License & Author
+
+This add-on is provided under the LGPL-3 license.  
+Author: jp-one  
+GitHub: [https://github.com/jp-one](https://github.com/jp-one)
