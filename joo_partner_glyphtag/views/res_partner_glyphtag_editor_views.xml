@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Single Record Editor Dialog Form View -->
+    <record id="view_partner_glyphtag_editor_dialog" model="ir.ui.view">
+        <field name="name">res.partner.form.glyphtag.editor.dialog</field>
+        <field name="model">res.partner</field>
+        <field name="priority">999</field>
+        <field name="arch" type="xml">
+            <form string="Glyph Editor">
+                <sheet>
+
+                    <!-- Preview of effective text/glyphs -->
+                    <group>
+                        <field string="Name" name="name_effective" class="joo-font fs-1 bg-light border rounded p-2 text-black" readonly="1"/>
+                        <field string="Street" name="street_effective" class="joo-font fs-1 bg-light border rounded p-2 text-black" readonly="1"/>
+                        <field string="Street2" name="street2_effective" class="joo-font fs-1 bg-light border rounded p-2 text-black" readonly="1"/>
+                        <field string="City" name="city_effective" class="joo-font fs-1 bg-light border rounded p-2 text-black" readonly="1"/>
+                    </group>
+                    
+                    <!-- GlyphTag toggle and indicator status -->
+                    <group>
+                        <group>
+                            <field name="use_glyphtag"/>
+                        </group>
+                        <group invisible="not use_glyphtag">
+                            <div class="d-flex align-items-center">
+                                <i class="fa fa-fw me-1 fa-lock text-primary" title="GlyphTag Enabled"/>
+                                <span class="badge rounded-pill text-bg-warning">GlyphTag Enabled</span>
+                            </div>
+                        </group>
+                    </group>
+                        
+                    <!-- Standard input fields (Visible when GlyphTag is disabled) -->
+                    <group invisible="use_glyphtag" string="Standard">
+                        <field name="type" invisible="1"/>
+                        <field name="name" required="type == 'contact' and not use_glyphtag"/>
+                        <field name="street"/>
+                        <field name="street2"/>
+                        <field name="city"/>
+                    </group>
+
+                    <!-- GlyphTag input fields (Visible when GlyphTag is enabled) -->
+                    <group invisible="not use_glyphtag" string="GlyphTag">
+                        <field name="type" invisible="1"/>
+                        <field string="Name" name="name_glyphtag" required="type == 'contact' and use_glyphtag"/>
+                        <field string="Street" name="street_glyphtag"/>
+                        <field string="Street2" name="street2_glyphtag"/>
+                        <field string="City" name="city_glyphtag"/>
+                    </group>
+
+                </sheet>
+                <footer>
+                    <button string="Save" special="save" class="btn-primary" data-hotkey="s"/>
+                    <button string="Discard" special="cancel" class="btn-secondary" data-hotkey="j"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Dialog Window Action -->
+    <record id="action_partner_glyphtag_editor" model="ir.actions.act_window">
+        <field name="name">GlyphTag Editor</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_id" ref="view_partner_glyphtag_editor_dialog"/>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- Contextual Action (Action Menu Entry) -->
+    <record id="action_server_partner_glyphtag_editor" model="ir.actions.server">
+        <field name="name">Open GlyphTag Editor</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="binding_model_id" ref="base.model_res_partner"/>
+        <field name="binding_view_types">form</field>
+        <field name="state">code</field>
+        <field name="code">
+action = records.action_server_partner_glyphtag_editor()
+        </field>
+    </record>
+   
+</odoo>

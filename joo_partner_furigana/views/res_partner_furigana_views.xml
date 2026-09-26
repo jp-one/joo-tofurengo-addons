@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ============================================================= -->
+        <!-- List View: Add furigana after display_name                    -->
+        <!-- ============================================================= -->
+        <record id="view_partner_list_inherit_furigana" model="ir.ui.view">
+            <field name="name">res.partner.list.inherit.furigana</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+
+                <!-- Add furigana field -->
+                <!-- repos/odoo/odoo/addons/base/views/res_partner_views.xml L.22 -->
+                <xpath expr="//list/field[@name='display_name']" position="after">
+                    <field name="furigana" string="Furigana" optional="hidden"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <!-- ============================================================= -->
+        <!-- Simple Form View: Add furigana after name                     -->
+        <!-- ============================================================= -->
+        <record id="view_partner_simple_form_inherit_furigana" model="ir.ui.view">
+            <field name="name">res.partner.simple.form.inherit.furigana</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_simple_form"/>
+            <field name="arch" type="xml">
+
+                <!-- Add furigana field -->
+                <!-- repos/odoo/odoo/addons/base/views/res_partner_views.xml L.50 -->
+                <xpath expr="//form//h1[field[@name='name']]" position="after">
+                    <div class="w-100">
+                        <field name="furigana" placeholder="Furigana"/>
+                    </div>
+                </xpath>
+
+            </field>
+        </record>
+
+        <!-- ============================================================= -->
+        <!-- Main Form View: Add furigana before email                     -->
+        <!-- ============================================================= -->
+        <record id="view_partner_form_inherit_furigana" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit.furigana</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+
+                <!-- Add furigana field -->
+                <!-- repos/odoo/odoo/addons/base/views/res_partner_views.xml L.143 -->
+                <xpath expr="//form//div[field[@name='email']]" position="before">
+                    <div class="w-md-75">
+                        <i class="fa fa-fw me-1 fa-comment text-primary" title="Furigana"/>
+                        <field name="furigana" placeholder="Furigana"/>
+                    </div>
+                </xpath>
+
+            </field>
+        </record>
+
+        <!-- ============================================================= -->
+        <!-- Kanban View: Add furigana before email                        -->
+        <!-- ============================================================= -->
+        <record id="res_partner_kanban_view_inherit_furigana" model="ir.ui.view">
+            <field name="name">res.partner.kanban.inherit.furigana</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+            <field name="arch" type="xml">
+
+                <!-- Add furigana field -->
+                <!-- repos/odoo/odoo/addons/base/views/res_partner_views.xml L.143 -->
+                <xpath expr="//kanban//main/div[field[@name='email']]" position="before">
+                    <div t-if="record.furigana.raw_value">
+                        <i class="fa fa-fw me-1 fa-comment text-primary" title="Furigana"/>
+                        <field name="furigana"/>
+                    </div>
+                </xpath>
+
+            </field>
+        </record>
+
+        <!-- ============================================================= -->
+        <!-- Search View: Add furigana as a searchable field               -->
+        <!-- ============================================================= -->
+        <record id="view_res_partner_filter_inherit_furigana" model="ir.ui.view">
+            <field name="name">res.partner.search.inherit.furigana</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+
+                <!-- Add furigana search field -->
+                <!-- repos/odoo/odoo/addons/base/views/res_partner_views.xml L.322 -->
+                <xpath expr="//search/field[@name='email']" position="before">
+                    <field name="furigana" filter_domain="[('furigana', 'ilike', self)]"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

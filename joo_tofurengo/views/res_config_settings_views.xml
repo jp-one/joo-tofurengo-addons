@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.joo.tofurengo</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="81"/>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Glyph System Identifier -->
+            <!-- repos/odoo/addons/base_setup/views/res_config_settings_views.xml L.58 -->
+            <xpath expr="//div[@id='companies']//block[@name='companies_setting_container']" position="inside">
+                <setting id="joo_set_setting"
+                         documentation="https://jp-rad.github.io/tofurengo/"
+                         help="Select the Glyph System Identifier that governs GlyphService normalization behavior.">
+                    <field name="joo_set"/>
+                </setting>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>
