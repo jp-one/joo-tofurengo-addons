@@ -175,8 +175,7 @@ class PartnerGlyphtagMixin(models.AbstractModel):
             tag_val = self._sanitize_spaces(tag_val)
             setattr(self, tag_field, tag_val)
             base_val = self._render(tag_val, use_base=True)
-            if base_val:
-                setattr(self, base_field, base_val)
+            setattr(self, base_field, base_val)
 
     @api.onchange("name_glyphtag")
     def _onchange_name_glyphtag(self):
@@ -216,6 +215,18 @@ class PartnerGlyphtagMixin(models.AbstractModel):
     @api.onchange("city")
     def _onchange_city(self):
         self._process_base_field_change("city")
+
+    @api.onchange("use_glyphtag")
+    def _onchange_use_glyphtag(self):
+        if self.use_glyphtag:
+            for base_field in self.BASE_FIELDS:
+                tag_field = f"{base_field}_glyphtag"
+                tag_val = getattr(self, tag_field)
+                if not tag_val:
+                    base_val = getattr(self, base_field)
+                    base_val = self._sanitize_spaces(base_val)
+                    tag_val = self._inverse(base_val)
+                    setattr(self, tag_field, tag_val)
 
     # ---------------------------------------------------------
     # Validations & Syncing Logic
