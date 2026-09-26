@@ -9,14 +9,30 @@ class ResPartner(models.Model):
     1. `joo.partner.glyphtag.editor.mixin`: Action handling (e.g., opening custom view/editor).
     2. `joo.partner.glyphtag.mixin`: Core field definitions, compute methods, and payload sync logic.
     """
-    
+
     _inherit = [
         "joo.partner.glyphtag.editor.mixin",
         "joo.partner.glyphtag.mixin",
         "res.partner",
     ]
-    _name = 'res.partner'
-    
+    _name = "res.partner"
+
+    # ---------------------------------------------------------
+    # Onchange: Parent Company -> GlyphTag Copy
+    # ---------------------------------------------------------
+    @api.onchange("parent_id")
+    def _onchange_parent_id(self):
+        """
+        Extend parent_id onchange to also copy GlyphTag fields
+        when a person is assigned to a company.
+        """
+        if self.parent_id and not self.is_company:
+            for base in self.BASE_FIELDS:
+                field_name = f"{base}_glyphtag"
+                field_val = getattr(self.parent_id, field_name)
+                setattr(self, field_name, field_val)
+                # setattr(self, f"{base}_glyph", getattr(self.parent_id, f"{base}_glyph"))
+            self.use_glyphtag = self.parent_id.use_glyphtag
     # ---------------------------------------------------------
     # Validations & Synchronizations (Save / Create / Write)
     # ---------------------------------------------------------
