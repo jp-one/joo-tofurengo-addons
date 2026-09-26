@@ -1,3 +1,5 @@
+[GitHub Pages (Japanese)](./README.ja.html)
+
 # joo-glyphtag-addons
 
 This is a collection of Odoo add-ons that extend the Contacts application to properly handle Japanese names and addresses.  
