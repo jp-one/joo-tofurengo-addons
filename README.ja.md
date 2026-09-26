@@ -3,11 +3,12 @@
 # joo-glyphtag-addons
 
 Odoo Contacts に日本語の氏名・住所を扱うための機能を追加するアドオン群です。  
-ふりがな、GlyphTag、異体字正規化、IVS 表示、フォント設定をまとめて提供します。  
+ふりがな、GlyphTag、文字列の正規化、GlyphTag の正規化、IVS 表示、フォント設定をまとめて提供します。  
 `joo_contacts_jp` はこれらを統合したアプリケーションです。
 
 この `joo_contacts_jp` アプリケーションをインストールすることにより、  
 MJ文字や行政事務標準文字を扱うことができます。
+
 
 ---
 
