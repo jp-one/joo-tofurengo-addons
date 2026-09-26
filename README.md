@@ -58,7 +58,7 @@ joo_contacts_jp            Japanese extension for Odoo Contacts
 Using GlyphTag allows you to input names and addresses containing variant characters.
 
 ### Katsushika-ku, Tokyo
-```
+```text
 {{MJ022336}東京都{MJ022336}飾区
 とうきょうと かつしかく
 
@@ -67,7 +67,7 @@ Using GlyphTag allows you to input names and addresses containing variant charac
 ```
 
 ### Katsuragi-shi, Nara
-```
+```text
 {{MJ022335}奈良県{MJ022335}城市
 ならけん かつらぎし
 
