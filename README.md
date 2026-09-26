@@ -2,11 +2,11 @@
 
 # joo-glyphtag-addons
 
-This is a collection of Odoo add-ons that extend the Contacts application to properly handle Japanese names and addresses.  
-It provides furigana input, GlyphTag processing, variant character normalization, IVS rendering, and font configuration.  
-The `joo_contacts_jp` module integrates all of these features into a single application.
+This is a collection of addons that extend Odoo Contacts to handle Japanese names and addresses.  
+It provides furigana, GlyphTag, string normalization, GlyphTag normalization, IVS rendering, and font configuration.  
+`joo_contacts_jp` is the integrated application that combines all these features.
 
-By installing the `joo_contacts_jp` application, you can work with MJ characters and the Administrative Standard Characters used in Japanese government systems.
+By installing the `joo_contacts_jp` application, you can handle MJ characters and the Standard Characters for Administrative Procedures.
 
 ---
 
