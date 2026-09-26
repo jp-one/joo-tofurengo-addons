@@ -27,14 +27,11 @@ class ResPartner(models.Model):
         when a person is assigned to a company.
         """
         if self.parent_id and not self.is_company:
-            for base in self.BASE_FIELDS:
-                if base == "name":
-                    continue
-                field_name = f"{base}_glyphtag"
+            for field_name in ["name_glyphtag", "street_glyphtag", "street2_glyphtag", "city_glyphtag"]:
                 field_val = getattr(self.parent_id, field_name)
                 setattr(self, field_name, field_val)
-                # setattr(self, f"{base}_glyph", getattr(self.parent_id, f"{base}_glyph"))
             self.use_glyphtag = self.parent_id.use_glyphtag
+    
     # ---------------------------------------------------------
     # Validations & Synchronizations (Save / Create / Write)
     # ---------------------------------------------------------
