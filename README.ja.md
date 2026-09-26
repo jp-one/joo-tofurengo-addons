@@ -1,3 +1,5 @@
+[GitHub Pages](./)
+
 # joo-glyphtag-addons
 
 Odoo Contacts に日本語の氏名・住所を扱うための機能を追加するアドオン群です。  
