@@ -117,19 +117,19 @@ class PartnerGlyphtagMixin(models.AbstractModel):
             setattr(rec, glyph_field, glyph_val)
 
     # Note: use_glyphtag is omitted from depends to avoid re-computations of *_glyph on toggle
-    @api.depends("name_glyphtag", "name")
+    @api.depends("name_glyphtag")
     def _compute_name_glyph(self):
         self._compute_single_glyph("name")
 
-    @api.depends("street_glyphtag", "street")
+    @api.depends("street_glyphtag")
     def _compute_street_glyph(self):
         self._compute_single_glyph("street")
 
-    @api.depends("street2_glyphtag", "street2")
+    @api.depends("street2_glyphtag")
     def _compute_street2_glyph(self):
         self._compute_single_glyph("street2")
 
-    @api.depends("city_glyphtag", "city")
+    @api.depends("city_glyphtag")
     def _compute_city_glyph(self):
         self._compute_single_glyph("city")
 

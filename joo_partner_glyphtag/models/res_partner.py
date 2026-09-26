@@ -28,6 +28,8 @@ class ResPartner(models.Model):
         """
         if self.parent_id and not self.is_company:
             for base in self.BASE_FIELDS:
+                if base == "name":
+                    continue
                 field_name = f"{base}_glyphtag"
                 field_val = getattr(self.parent_id, field_name)
                 setattr(self, field_name, field_val)

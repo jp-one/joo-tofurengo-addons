@@ -11,6 +11,10 @@
                 <!-- Main Form -->
                 <xpath expr="//form" position="inside">
                     <field name="use_glyphtag" invisible="1"/>
+                    <field name="name_glyphtag" invisible="1"/>
+                    <field name="street_glyphtag" invisible="1"/>
+                    <field name="street2_glyphtag" invisible="1"/>
+                    <field name="city_glyphtag" invisible="1"/>
                 </xpath>
 
                 <!-- GlyphTag Editor Button -->
